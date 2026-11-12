@@ -1,26 +1,247 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --font-inter-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-space-family: var(--font-space-grotesk), -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    /* Modern Corporate Memphis + Yellow Accent Theme */
+    --memphis-yellow: #FFE500;
+    --memphis-yellow-deep: #FFC700;
+    --memphis-yellow-light: #FFF8D6;
+    --memphis-black: #0F1115;
+    --memphis-dark: #181A20;
+    --memphis-slate: #525866;
+    --memphis-border: #E5E7EB;
+    --memphis-bg: #F8F9FC;
+    --memphis-bg-warm: #FAF9F5;
+    --memphis-card: #FFFFFF;
+    
+    /* Playful Accent Highlights */
+    --memphis-blue: #0284C7;
+    --memphis-coral: #FF5A36;
+    --memphis-mint: #10B981;
+    --memphis-purple: #8B5CF6;
+  }
+
+  html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-inter-family);
+    background-color: var(--memphis-bg-warm);
+    color: var(--memphis-black);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: var(--font-space-family);
+    letter-spacing: -0.03em;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Diagonal Yellow Stripe Patterns */
+.bg-diagonal-stripes {
+  background-image: repeating-linear-gradient(
+    45deg,
+    #FFE500,
+    #FFE500 12px,
+    #FFD028 12px,
+    #FFD028 24px
+  );
+}
+
+.bg-diagonal-stripes-subtle {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 229, 0, 0.18),
+    rgba(255, 229, 0, 0.18) 12px,
+    transparent 12px,
+    transparent 24px
+  );
+}
+
+.bg-hazard-stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #FFE500,
+    #FFE500 10px,
+    #0F1115 10px,
+    #0F1115 20px
+  );
+}
+
+.bg-dot-pattern {
+  background-image: radial-gradient(rgba(15, 17, 21, 0.12) 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
+}
+
+.bg-dot-pattern-yellow {
+  background-image: radial-gradient(#FFC700 2px, transparent 2px);
+  background-size: 20px 20px;
+}
+
+/* 3D Clay Tactile Elevation & Shadows */
+.clay-card {
+  background: #ffffff;
+  border: 1.5px solid #E8ECEF;
+  border-radius: 1.25rem;
+  box-shadow: 
+    0 10px 25px -4px rgba(15, 17, 21, 0.05),
+    0 4px 10px -2px rgba(15, 17, 21, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.clay-card:hover {
+  transform: translateY(-3px);
+  border-color: #0F1115;
+  box-shadow: 
+    0 18px 35px -6px rgba(15, 17, 21, 0.09),
+    0 6px 14px -3px rgba(15, 17, 21, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.clay-card-yellow {
+  background: #FFE500;
+  border: 2px solid #0F1115;
+  border-radius: 1.25rem;
+  box-shadow: 
+    0 10px 24px -4px rgba(255, 229, 0, 0.4),
+    4px 4px 0px 0px #0F1115;
+  transition: all 0.2s ease;
+}
+
+.clay-card-yellow:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 
+    0 14px 28px -4px rgba(255, 229, 0, 0.5),
+    6px 6px 0px 0px #0F1115;
+}
+
+/* Tactile 3D Buttons */
+.btn-clay-yellow {
+  background-color: #FFE500;
+  color: #0F1115;
+  font-weight: 800;
+  border: 2px solid #0F1115;
+  border-radius: 9999px;
+  box-shadow: 0 4px 0 0 #0F1115;
+  transition: all 0.15s ease;
+}
+
+.btn-clay-yellow:hover {
+  transform: translateY(1px);
+  box-shadow: 0 3px 0 0 #0F1115;
+}
+
+.btn-clay-yellow:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 0 #0F1115;
+}
+
+.btn-clay-black {
+  background-color: #0F1115;
+  color: #FFFFFF;
+  font-weight: 800;
+  border: 2px solid #0F1115;
+  border-radius: 9999px;
+  box-shadow: 0 4px 0 0 rgba(15, 17, 21, 0.4);
+  transition: all 0.15s ease;
+}
+
+.btn-clay-black:hover {
+  background-color: #1F222A;
+  transform: translateY(1px);
+  box-shadow: 0 3px 0 0 rgba(15, 17, 21, 0.4);
+}
+
+.btn-clay-black:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 0 rgba(15, 17, 21, 0.4);
+}
+
+.btn-clay-white {
+  background-color: #FFFFFF;
+  color: #0F1115;
+  font-weight: 800;
+  border: 2px solid #0F1115;
+  border-radius: 9999px;
+  box-shadow: 0 4px 0 0 #0F1115;
+  transition: all 0.15s ease;
+}
+
+.btn-clay-white:hover {
+  background-color: #F8F9FC;
+  transform: translateY(1px);
+  box-shadow: 0 3px 0 0 #0F1115;
+}
+
+.btn-clay-white:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 0 #0F1115;
+}
+
+/* Subtle float keyframe for 3D elements */
+@keyframes softFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1.5deg);
+  }
+}
+
+@keyframes softFloatReverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(8px) rotate(-1.5deg);
+  }
+}
+
+@keyframes gentlePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+.animate-soft-float {
+  animation: softFloat 5s ease-in-out infinite;
+}
+
+.animate-soft-float-delayed {
+  animation: softFloatReverse 6s ease-in-out 1s infinite;
+}
+
+.animate-gentle-pulse {
+  animation: gentlePulse 4s ease-in-out infinite;
+}
+
+/* Touch & Smooth Scroll Utilities */
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+}
+
+/* Hide scrollbar */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
