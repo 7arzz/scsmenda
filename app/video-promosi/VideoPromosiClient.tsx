@@ -731,7 +731,7 @@ export default function VideoPromosiClient() {
                 </p>
               </div>
               <div className="pt-2 border-t border-[#0F1115]/10 font-mono text-[11px] font-bold text-[#0F1115]">
-                ✓ Penjualan Riil 3 Bulan
+                ✓ Penjualan Riil & Konsinyasi
               </div>
             </div>
 

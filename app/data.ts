@@ -158,8 +158,8 @@ export const ACTIVITIES: ActivityStep[] = [
     phase: "Peluncuran & Operasional",
     phaseIndex: 3,
     description:
-      "Selama berjalannya perusahaan dalam tiga bulan, para anggota menjalankan tugas masing-masing sesuai dengan jabatan yang dimiliki. Kegiatan yang dilakukan meliputi promosi, konsinyasi, rapat mingguan (weekly meeting), dan lain sebagainya.",
-    tag: "3 Bulan Eksekusi",
+      "Selama berjalannya perusahaan, para anggota menjalankan tugas masing-masing sesuai dengan jabatan yang dimiliki. Kegiatan yang dilakukan meliputi promosi, konsinyasi, rapat mingguan (weekly meeting), dan lain sebagainya.",
+    tag: "Eksekusi Bisnis",
     highlight: "Praktek riil: rantai pasok, promosi gencar, dan konsinyasi."
   },
   {
@@ -291,7 +291,7 @@ export const CORPORATE_DIVISIONS: CorporateDivision[] = [
     leadRole: "Pengelola Modal, Arus Kas & Laba",
     responsibilities: [
       "Mencatat seluruh arus kas masuk, keluar, dan bukti transaksi harian",
-      "Menyusun laporan laba rugi bulanan dan kalkulasi harga pokok penjualan (HPP)",
+      "Menyusun laporan laba rugi berkala dan kalkulasi harga pokok penjualan (HPP)",
       "Mengelola dana investor, kas kecil, serta alokasi program CSR",
       "Menghitung kalkulasi dividen pemegang saham dan pembagian gaji anggota saat likuidasi"
     ],
@@ -342,74 +342,12 @@ export const CORPORATE_DIVISIONS: CorporateDivision[] = [
     leadRole: "Pengembang Iklim Tim & Evaluasi Kerja",
     responsibilities: [
       "Menjalankan proses seleksi dan wawancara saat rekrutmen awal siswa",
-      "Menyelenggarakan program team bonding minimal 2 kali selama 3 bulan",
+      "Menyelenggarakan program team bonding minimal 2 kali secara berkala",
       "Memantau absensi, keaktifan, dan mendamaikan jika terjadi gesekan internal",
       "Mengevaluasi kontribusi tiap anggota sebagai dasar rekomendasi gaji likuidasi"
     ],
     skillsGained: ["People Management", "Conflict Resolution", "Culture Building", "Talent Assessment"],
     deliverable: "Dua Sesi Program Team Bonding & Matriks Evaluasi Kontribusi Karyawan"
-  }
-];
-
-export interface MonthlyCycle {
-  month: number;
-  label: string;
-  theme: string;
-  period: string;
-  accent: string;
-  description: string;
-  phases: string;
-  deliverables: string[];
-}
-
-export const MONTHLY_CYCLES: MonthlyCycle[] = [
-  {
-    month: 1,
-    label: "Bulan 01",
-    theme: "Formasi, Fondasi & R&D Produk",
-    period: "Minggu 01 — 04",
-    accent: "#FFE500",
-    description:
-      "Fokus pada rekrutmen anggota saat MPLS, wawancara kompetensi, pendirian entitas korporasi, perumusan brand identity, riset produk utama bernilai jual, dan penyusunan SOP serta Business Plan (BP).",
-    phases: "Fase 01 & 02 (Tahap 01 s/d 07)",
-    deliverables: [
-      "Struktur organisasi perusahaan & pembagian divisi resmi",
-      "Logo, filosofi brand, visi misi, dan identitas perusahaan",
-      "Prototipe produk utama teruji & validasi resep/kemasan",
-      "Dokumen SOP baku & kalkulasi Business Plan"
-    ]
-  },
-  {
-    month: 2,
-    label: "Bulan 02",
-    theme: "Grand Launching & Operasional Pasar",
-    period: "Minggu 05 — 08",
-    accent: "#0284C7",
-    description:
-      "Peluncuran resmi ke publik, dekorasi panggung, gladi presentasi pitch deck, kampanye promosi gencar, pembukaan jalur konsinyasi, rapat mingguan, dan pelaksanaan Program HRD 1 untuk mempererat kekeluargaan.",
-    phases: "Fase 03 (Tahap 08 s/d 11)",
-    deliverables: [
-      "Pentas Grand Launching produk di hadapan warga sekolah",
-      "Operasional penjualan langsung dan jalur konsinyasi mitra",
-      "Rapat evaluasi mingguan (weekly meeting) terjadwal",
-      "Program HRD sesi 1 (Internal Team Building)"
-    ]
-  },
-  {
-    month: 3,
-    label: "Bulan 03",
-    theme: "Ekspansi, CSR & Puncak Likuidasi",
-    period: "Minggu 09 — 12",
-    accent: "#FF5A36",
-    description:
-      "Puncak penjualan, realisasi program Corporate Social Responsibility (CSR) dari persentase laba, audit penutupan buku keuangan, persiapan presentasi di aula sekolah, hingga pembagian dividen dan gaji anggota.",
-    phases: "Fase 04 (Tahap 12 s/d 14)",
-    deliverables: [
-      "Penyaluran dana CSR kebermanfaatan masyarakat",
-      "Laporan audit keuangan akhir dan kalkulasi dividen",
-      "Dekorasi panggung & gelaran acara Likuidasi di aula",
-      "Penyerahan dividen investor dan gaji penuh seluruh siswa"
-    ]
   }
 ];
 

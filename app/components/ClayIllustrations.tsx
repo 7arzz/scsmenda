@@ -413,7 +413,7 @@ export function ClayHeroScene({ className = "" }: { className?: string }) {
             LAB BISNIS
           </text>
           <text x="56" y="42" fontSize="10" fontWeight="700" fontFamily="sans-serif" fill="#FFFFFF">
-            Praktik Riil 3 Bulan
+            Praktik Bisnis Nyata
           </text>
         </g>
       </svg>

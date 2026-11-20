@@ -7,7 +7,6 @@ import {
   ACTIVITIES,
   PROGRAM_GOALS,
   CORPORATE_DIVISIONS,
-  MONTHLY_CYCLES,
   FAQS,
   ActivityStep,
   REGISTRATION_URL,
@@ -62,7 +61,6 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [showScrollTop, setShowScrollTop] = useState<boolean>(false);
   const [activeDivision, setActiveDivision] = useState<string>("ceo");
-  const [activeMonthCycle, setActiveMonthCycle] = useState<number>(1);
   const [openFaqId, setOpenFaqId] = useState<number | null>(1);
 
   const phases = [
@@ -163,13 +161,6 @@ export default function Home() {
     );
   }, [activeDivision]);
 
-  const currentMonthData = useMemo(() => {
-    return (
-      MONTHLY_CYCLES.find((m) => m.month === activeMonthCycle) ||
-      MONTHLY_CYCLES[0]
-    );
-  }, [activeMonthCycle]);
-
   // Map phase to friendly clay icon
   const getPhaseIcon = (phaseIndex: number) => {
     switch (phaseIndex) {
@@ -207,7 +198,7 @@ export default function Home() {
           <div className="hidden sm:flex items-center space-x-3 shrink-0 text-[11px]">
             <span>14 TAHAPAN</span>
             <span>•</span>
-            <span>3 BULAN OPERASI</span>
+            <span>PRAKTIK BISNIS MANDIRI</span>
             <span>•</span>
             <span className="bg-[#0F1115] text-white px-2 py-0.5 rounded text-[10px]">
               TA 2026/2027
@@ -262,28 +253,22 @@ export default function Home() {
                 [02] 14 Tahapan
               </button>
               <button
-                onClick={() => scrollToSection("siklus")}
-                className="px-3 py-2 rounded-lg hover:bg-[#FFE500] transition-colors"
-              >
-                [03] Siklus 3 Bulan
-              </button>
-              <button
                 onClick={() => scrollToSection("organisasi")}
                 className="px-3 py-2 rounded-lg hover:bg-[#FFE500] transition-colors"
               >
-                [04] Struktur Tim
+                [03] Struktur Tim
               </button>
               <button
                 onClick={() => scrollToSection("tujuan")}
                 className="px-3 py-2 rounded-lg hover:bg-[#FFE500] transition-colors"
               >
-                [05] 6 Capaian
+                [04] 6 Capaian
               </button>
               <button
                 onClick={() => scrollToSection("faq")}
                 className="px-3 py-2 rounded-lg hover:bg-[#FFE500] transition-colors"
               >
-                [06] FAQ
+                [05] FAQ
               </button>
               <button
                 onClick={() => scrollToSection("video-profil")}
@@ -378,38 +363,31 @@ export default function Home() {
                     <ChevronRight className="w-4 h-4" />
                   </button>
                   <button
-                    onClick={() => scrollToSection("siklus")}
-                    className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
-                  >
-                    <span>[ 03 ] Siklus 3 Bulan Operasi</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                  <button
                     onClick={() => scrollToSection("organisasi")}
                     className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
                   >
-                    <span>[ 04 ] Struktur 5 Divisi</span>
+                    <span>[ 03 ] Struktur 5 Divisi</span>
                     <ChevronRight className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => scrollToSection("tujuan")}
                     className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
                   >
-                    <span>[ 05 ] 6 Capaian Mutu</span>
+                    <span>[ 04 ] 6 Capaian Mutu</span>
                     <ChevronRight className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => scrollToSection("faq")}
                     className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
                   >
-                    <span>[ 06 ] FAQ & Tanya Jawab</span>
+                    <span>[ 05 ] FAQ & Tanya Jawab</span>
                     <ChevronRight className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => scrollToSection("daftar")}
                     className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
                   >
-                    <span>[ 07 ] Pendaftaran & Kontak CP</span>
+                    <span>[ 06 ] Pendaftaran & Kontak CP</span>
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -825,21 +803,21 @@ export default function Home() {
               <div className="flex items-start justify-between">
                 <div>
                   <span className="font-mono text-[10px] sm:text-xs text-[#525866] font-bold uppercase tracking-wider block">
-                    MASA INKUBASI
+                    FASE UTAMA
                   </span>
                   <div className="font-display font-black text-3xl sm:text-4xl text-[#0F1115] mt-1">
-                    03{" "}
+                    04{" "}
                     <span className="text-base font-bold text-[#525866]">
-                      Bulan
+                      Fase
                     </span>
                   </div>
                 </div>
                 <div className="w-12 h-12 bg-[#38BDF8] border-2 border-[#0F1115] rounded-2xl flex items-center justify-center shadow-[2px_2px_0px_#0F1115]">
-                  <Calendar className="w-6 h-6 text-[#0F1115]" />
+                  <Layers className="w-6 h-6 text-[#0F1115]" />
                 </div>
               </div>
               <div className="mt-3 pt-3 border-t border-[#E5E7EB] text-xs font-mono font-bold text-[#525866]">
-                Praktik Eksekusi Pasar Riil
+                Dari Inisiasi Hingga Likuidasi
               </div>
             </div>
 
@@ -1022,7 +1000,7 @@ export default function Home() {
                   Siswa secara mandiri mengembangkan nilai merek (brand equity),
                   menyalurkan kepedulian sosial melalui program CSR dari laba
                   bersih, serta menikmati hasil nyata berupa dividen saham dan
-                  gaji bulanan.
+                  gaji operasional.
                 </p>
               </div>
             </div>
@@ -1300,133 +1278,7 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------------ */}
-      {/* 7. SECTION 03: SIKLUS 3 BULAN (INTERACTIVE ROADMAP INFOGRAPHIC) */}
-      {/* ------------------------------------------------------------ */}
-      <section
-        id="siklus"
-        className="border-b-2 border-[#0F1115] bg-[#FAF9F5] py-14 sm:py-20 lg:py-24"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Section Marker */}
-          <div className="flex items-center space-x-3 mb-4">
-            <span className="w-6 h-3 bg-diagonal-stripes border border-[#0F1115] rounded-xs" />
-            <span className="font-mono text-xs font-black uppercase tracking-widest text-[#0F1115]">
-              SEKSI [ 03 ] // TIMELINE STRATEGIS
-            </span>
-          </div>
-
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b-2 border-[#0F1115]">
-            <div className="max-w-2xl space-y-2">
-              <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-[#0F1115] tracking-tight uppercase leading-tight">
-                Siklus 3 Bulan Operasional
-              </h2>
-              <p className="text-sm sm:text-base text-[#525866] leading-relaxed">
-                Setiap entitas bisnis siswa menjalani siklus hidup berdurasi 3
-                bulan terukur, mulai dari inkubasi ide hingga hari puncak
-                likuidasi.
-              </p>
-            </div>
-
-            {/* Interactive Month Switcher Pills */}
-            <div className="flex items-center space-x-2">
-              {MONTHLY_CYCLES.map((m) => (
-                <button
-                  key={m.month}
-                  onClick={() => setActiveMonthCycle(m.month)}
-                  className={`px-4 py-2.5 rounded-full text-xs font-mono font-black uppercase border-2 transition-all ${
-                    activeMonthCycle === m.month
-                      ? "bg-[#0F1115] text-[#FFE500] border-[#0F1115] shadow-[3px_3px_0px_#FFE500]"
-                      : "bg-white text-[#0F1115] border-[#0F1115] hover:bg-[#FFE500]/20 shadow-[2px_2px_0px_#0F1115]"
-                  }`}
-                >
-                  {m.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Dynamic Month Deep-Dive Infographic Card */}
-          <div className="mt-8 bg-white border-2 border-[#0F1115] rounded-3xl p-6 sm:p-10 shadow-[6px_6px_0px_#0F1115] relative overflow-hidden">
-            {/* Distinctive Diagonal Stripe bar */}
-            <div className="absolute top-0 inset-x-0 h-3 bg-diagonal-stripes border-b border-[#0F1115]" />
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
-              <div className="lg:col-span-7 space-y-5">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="bg-[#FFE500] text-[#0F1115] border border-[#0F1115] px-3 py-1 rounded-full text-xs font-mono font-black uppercase">
-                    {currentMonthData.period}
-                  </span>
-                  <span className="bg-[#FAF9F5] text-[#0F1115] border border-[#0F1115] px-3 py-1 rounded-full text-xs font-mono font-black uppercase">
-                    {currentMonthData.phases}
-                  </span>
-                </div>
-
-                <h3 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-[#0F1115] leading-tight">
-                  {currentMonthData.theme}
-                </h3>
-
-                <p className="text-sm sm:text-base text-[#525866] leading-relaxed">
-                  {currentMonthData.description}
-                </p>
-
-                {/* Key Deliverables Checklist */}
-                <div className="pt-2">
-                  <div className="font-mono text-xs font-black uppercase text-[#0F1115] tracking-wider mb-3">
-                    Target & Output Kunci {currentMonthData.label}:
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {currentMonthData.deliverables.map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="bg-[#FAF9F5] border border-[#0F1115] rounded-xl p-3 flex items-start space-x-2.5 text-xs font-mono text-[#0F1115] font-bold"
-                      >
-                        <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Month Visual Badge / Clay Anchor */}
-              <div className="lg:col-span-5 flex justify-center">
-                <div className="w-full max-w-xs bg-[#FAF9F5] border-2 border-[#0F1115] rounded-2xl p-6 text-center shadow-[4px_4px_0px_#0F1115] space-y-4">
-                  <div className="w-24 h-24 mx-auto flex items-center justify-center">
-                    {activeMonthCycle === 1 && (
-                      <ClayBriefcase className="w-24 h-24" />
-                    )}
-                    {activeMonthCycle === 2 && (
-                      <ClayRocket className="w-24 h-24" />
-                    )}
-                    {activeMonthCycle === 3 && (
-                      <ClayPiggyBank className="w-24 h-24" />
-                    )}
-                  </div>
-                  <div>
-                    <div className="font-display font-black text-2xl text-[#0F1115]">
-                      {currentMonthData.label}
-                    </div>
-                    <div className="font-mono text-xs font-bold text-[#525866] mt-1">
-                      {currentMonthData.period}
-                    </div>
-                  </div>
-                  <div className="p-3 bg-white border border-[#0F1115] rounded-xl text-xs font-mono text-[#0F1115] font-bold">
-                    {activeMonthCycle === 1 &&
-                      "Fokus: SOP & Desain Produk Inovatif"}
-                    {activeMonthCycle === 2 &&
-                      "Fokus: Konsinyasi & Target Omzet Pasar"}
-                    {activeMonthCycle === 3 &&
-                      "Fokus: Penyaluran CSR & Pembagian Dividen"}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------ */}
-      {/* 8. SECTION 04: STRUKTUR ORGANISASI KORPORASI SISWA (5 DIVISI) */}
+      {/* 7. SECTION 03: STRUKTUR ORGANISASI KORPORASI SISWA (5 DIVISI) */}
       {/* ------------------------------------------------------------ */}
       <section
         id="organisasi"
@@ -1436,7 +1288,7 @@ export default function Home() {
           <div className="flex items-center space-x-3 mb-4">
             <span className="w-6 h-3 bg-diagonal-stripes border border-[#0F1115] rounded-xs" />
             <span className="font-mono text-xs font-black uppercase tracking-widest text-[#0F1115]">
-              SEKSI [ 04 ] // TATA KELOLA PERUSAHAAN
+              SEKSI [ 03 ] // TATA KELOLA PERUSAHAAN
             </span>
           </div>
 
@@ -1556,7 +1408,7 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------------ */}
-      {/* 9. SECTION 05: 6 CAPAIAN KOMPETENSI (TUJUAN & MANFAAT PROGRAM) */}
+      {/* 8. SECTION 04: 6 CAPAIAN KOMPETENSI (TUJUAN & MANFAAT PROGRAM) */}
       {/* ------------------------------------------------------------ */}
       <section
         id="tujuan"
@@ -1566,7 +1418,7 @@ export default function Home() {
           <div className="flex items-center space-x-3 mb-4">
             <span className="w-6 h-3 bg-diagonal-stripes border border-[#0F1115] rounded-xs" />
             <span className="font-mono text-xs font-black uppercase tracking-widest text-[#0F1115]">
-              SEKSI [ 05 ] // CAPAIAN KOMPETENSI
+              SEKSI [ 04 ] // CAPAIAN KOMPETENSI
             </span>
           </div>
 
@@ -1613,7 +1465,7 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------------ */}
-      {/* 10. SECTION 06: FAQ & TANYA JAWAB PENDIDIKAN */}
+      {/* 9. SECTION 05: FAQ & TANYA JAWAB PENDIDIKAN */}
       {/* ------------------------------------------------------------ */}
       <section
         id="faq"
@@ -1623,7 +1475,7 @@ export default function Home() {
           <div className="flex items-center space-x-3 mb-4">
             <span className="w-6 h-3 bg-diagonal-stripes border border-[#0F1115] rounded-xs" />
             <span className="font-mono text-xs font-black uppercase tracking-widest text-[#0F1115]">
-              SEKSI [ 06 ] // PERTANYAAN UMUM
+              SEKSI [ 05 ] // PERTANYAAN UMUM
             </span>
           </div>
 
@@ -2079,18 +1931,10 @@ export default function Home() {
                 </li>
                 <li>
                   <button
-                    onClick={() => scrollToSection("siklus")}
-                    className="hover:text-[#0F1115] text-left"
-                  >
-                    03. Siklus 3 Bulan
-                  </button>
-                </li>
-                <li>
-                  <button
                     onClick={() => scrollToSection("organisasi")}
                     className="hover:text-[#0F1115] text-left"
                   >
-                    04. Struktur 5 Divisi
+                    03. Struktur 5 Divisi
                   </button>
                 </li>
                 <li>
@@ -2098,7 +1942,7 @@ export default function Home() {
                     onClick={() => scrollToSection("tujuan")}
                     className="hover:text-[#0F1115] text-left"
                   >
-                    05. Capaian Kompetensi
+                    04. Capaian Kompetensi
                   </button>
                 </li>
                 <li>
@@ -2106,7 +1950,7 @@ export default function Home() {
                     onClick={() => scrollToSection("faq")}
                     className="hover:text-[#0F1115] text-left"
                   >
-                    06. Tanya Jawab (FAQ)
+                    05. Tanya Jawab (FAQ)
                   </button>
                 </li>
                 <li>
@@ -2114,7 +1958,7 @@ export default function Home() {
                     onClick={() => scrollToSection("daftar")}
                     className="hover:text-[#0F1115] text-left font-black text-[#0F1115]"
                   >
-                    07. Pendaftaran & CP
+                    06. Pendaftaran & CP
                   </button>
                 </li>
                 <li className="pt-1">
@@ -2123,7 +1967,7 @@ export default function Home() {
                     className="text-[#0F1115] font-black hover:underline text-left inline-flex items-center space-x-1"
                   >
                     <Play className="w-3 h-3 fill-current text-[#0F1115]" />
-                    <span>08. Video Profil Siswa</span>
+                    <span>07. Video Profil Siswa</span>
                   </button>
                 </li>
               </ul>
