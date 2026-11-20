@@ -241,107 +241,111 @@ export default function VideoPromosiClient() {
   return (
     <div className="min-h-screen bg-[#FAF9F5] text-[#0F1115] flex flex-col font-sans selection:bg-[#FFE500] selection:text-[#0F1115] relative overflow-x-clip">
       {/* ------------------------------------------------------------ */}
-      {/* 1. TOP DIAGONAL BANNER */}
+      {/* 1. FIXED TOP WRAPPER (TOP BANNER + HEADER) */}
       {/* ------------------------------------------------------------ */}
-      <div className="w-full bg-[#FFE500] border-b-2 border-[#0F1115] overflow-hidden select-none">
-        <div className="flex items-center justify-between px-3 sm:px-6 py-2 text-xs font-mono font-bold tracking-wider uppercase text-[#0F1115]">
-          <div className="flex items-center space-x-2 sm:space-x-3 overflow-hidden">
-            <div className="w-7 h-4 bg-diagonal-stripes border border-[#0F1115] rounded-xs shrink-0" />
-            <span className="truncate">
-              SCSMENDA // DOKUMENTASI & MEDIA RESMI
-            </span>
-            <span className="hidden md:inline-block px-2 py-0.5 bg-[#0F1115] text-[#FFE500] text-[10px] rounded-full font-sans font-black">
-              VIDEO PROMOSI RESMI
-            </span>
-          </div>
-
-          <div className="hidden sm:flex items-center space-x-3 shrink-0 text-[11px]">
-            <span className="inline-flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              FULL HD 1080P
-            </span>
-            <span>•</span>
-            <span>TA 2026/2027</span>
-          </div>
-        </div>
-      </div>
-
-      {/* ------------------------------------------------------------ */}
-      {/* 2. STICKY HEADER WITH BACK TO HOME */}
-      {/* ------------------------------------------------------------ */}
-      <header className="sticky top-0 z-50 bg-[#FAF9F5]/95 backdrop-blur-md border-b-2 border-[#0F1115] shadow-xs transition-shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-18 sm:h-20">
-            {/* Left: Brand with Official Logo */}
-            <Link
-              href="/"
-              className="flex items-center space-x-3 group shrink-0"
-            >
-              <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-[#FFE500] border-2 border-[#0F1115] rounded-full p-1 flex items-center justify-center shadow-[3px_3px_0px_#0F1115] group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:shadow-[1px_1px_0px_#0F1115] transition-all overflow-hidden shrink-0">
-                <Image
-                  src="/logo.png"
-                  alt="Logo Student Company of SMENDA"
-                  width={56}
-                  height={56}
-                  className="w-full h-full object-contain rounded-full"
-                  priority
-                />
-              </div>
-              <div className="min-w-0">
-                <div className="flex items-center space-x-1.5">
-                  <span className="font-display font-black text-lg sm:text-xl tracking-tight text-[#0F1115] leading-none">
-                    SCSMENDA
-                  </span>
-                  <span className="w-2.5 h-2.5 bg-[#FFE500] rounded-full border border-[#0F1115]" />
-                </div>
-                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-[#525866] font-bold block mt-0.5">
-                  STUDENT COMPANY SMENDA
-                </span>
-              </div>
-            </Link>
-
-            {/* Middle: Breadcrumb / Section indicator */}
-            <div className="hidden md:flex items-center space-x-2 font-mono text-xs font-bold text-[#525866]">
-              <Link href="/" className="hover:text-[#0F1115] transition-colors">
-                Beranda
-              </Link>
-              <span>/</span>
-              <span className="text-[#0F1115] bg-[#FFE500] px-2 py-0.5 rounded border border-[#0F1115]">
-                Video Promosi
+      <div className="fixed top-0 left-0 right-0 z-50">
+        {/* Top Diagonal Banner */}
+        <div className="w-full bg-[#FFE500] border-b-2 border-[#0F1115] overflow-hidden select-none">
+          <div className="flex items-center justify-between px-3 sm:px-6 py-1.5 sm:py-2 text-[10px] sm:text-xs font-mono font-bold tracking-wider uppercase text-[#0F1115]">
+            <div className="flex items-center space-x-2 sm:space-x-3 overflow-hidden">
+              <div className="w-6 h-3.5 sm:w-7 sm:h-4 bg-diagonal-stripes border border-[#0F1115] rounded-xs shrink-0" />
+              <span className="truncate">
+                SCSMENDA // DOKUMENTASI & MEDIA RESMI
+              </span>
+              <span className="hidden md:inline-block px-2 py-0.5 bg-[#0F1115] text-[#FFE500] text-[10px] rounded-full font-sans font-black">
+                VIDEO PROMOSI RESMI
               </span>
             </div>
 
-            {/* Right: Actions */}
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              <button
-                onClick={copyPageLink}
-                className="btn-clay-white hidden sm:inline-flex items-center justify-center px-3.5 py-2 text-xs font-mono font-bold tracking-wider uppercase border-2 border-[#0F1115] rounded-xl bg-white shadow-[2px_2px_0px_#0F1115] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
-                title="Salin tautan video"
-              >
-                {copied ? (
-                  <>
-                    <Check className="w-4 h-4 mr-1.5 text-emerald-600" />
-                    <span>Tersalin!</span>
-                  </>
-                ) : (
-                  <>
-                    <Share2 className="w-4 h-4 mr-1.5 text-[#0F1115]" />
-                    <span>Bagikan</span>
-                  </>
-                )}
-              </button>
-
-              <Link
-                href="/"
-                className="btn-clay-yellow inline-flex items-center justify-center px-4 sm:px-5 py-2.5 text-xs font-black tracking-wider uppercase"
-              >
-                <ArrowLeft className="w-4 h-4 mr-1.5" />
-                <span>Ke Beranda</span>
-              </Link>
+            <div className="hidden sm:flex items-center space-x-3 shrink-0 text-[11px]">
+              <span className="inline-flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                FULL HD 1080P
+              </span>
+              <span>•</span>
+              <span>TA 2026/2027</span>
             </div>
           </div>
         </div>
-      </header>
+
+        {/* Header with Back to Home */}
+        <header className="bg-[#FAF9F5]/95 backdrop-blur-md border-b-2 border-[#0F1115] shadow-xs">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16 sm:h-20">
+              {/* Left: Brand with Official Logo */}
+              <Link
+                href="/"
+                className="flex items-center space-x-3 group shrink-0"
+              >
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-[#FFE500] border-2 border-[#0F1115] rounded-full p-1 flex items-center justify-center shadow-[3px_3px_0px_#0F1115] group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:shadow-[1px_1px_0px_#0F1115] transition-all overflow-hidden shrink-0">
+                  <Image
+                    src="/logo.png"
+                    alt="Logo Student Company of SMENDA"
+                    width={56}
+                    height={56}
+                    className="w-full h-full object-contain rounded-full"
+                    priority
+                  />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center space-x-1.5">
+                    <span className="font-display font-black text-lg sm:text-xl tracking-tight text-[#0F1115] leading-none">
+                      SCSMENDA
+                    </span>
+                    <span className="w-2.5 h-2.5 bg-[#FFE500] rounded-full border border-[#0F1115]" />
+                  </div>
+                  <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-[#525866] font-bold block mt-0.5">
+                    STUDENT COMPANY SMENDA
+                  </span>
+                </div>
+              </Link>
+
+              {/* Middle: Breadcrumb / Section indicator */}
+              <div className="hidden md:flex items-center space-x-2 font-mono text-xs font-bold text-[#525866]">
+                <Link href="/" className="hover:text-[#0F1115] transition-colors">
+                  Beranda
+                </Link>
+                <span>/</span>
+                <span className="text-[#0F1115] bg-[#FFE500] px-2 py-0.5 rounded border border-[#0F1115]">
+                  Video Promosi
+                </span>
+              </div>
+
+              {/* Right: Actions */}
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <button
+                  onClick={copyPageLink}
+                  className="btn-clay-white hidden sm:inline-flex items-center justify-center px-3.5 py-2 text-xs font-mono font-bold tracking-wider uppercase border-2 border-[#0F1115] rounded-xl bg-white shadow-[2px_2px_0px_#0F1115] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+                  title="Salin tautan video"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-4 h-4 mr-1.5 text-emerald-600" />
+                      <span>Tersalin!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Share2 className="w-4 h-4 mr-1.5 text-[#0F1115]" />
+                      <span>Bagikan</span>
+                    </>
+                  )}
+                </button>
+
+                <Link
+                  href="/"
+                  className="btn-clay-yellow inline-flex items-center justify-center px-4 sm:px-5 py-2.5 text-xs font-black tracking-wider uppercase"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-1.5" />
+                  <span>Ke Beranda</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </header>
+      </div>
+
+      {/* Spacer so content starts below fixed navbar */}
+      <div className="h-[92px] sm:h-[114px] shrink-0" aria-hidden="true" />
 
       {/* ------------------------------------------------------------ */}
       {/* 3. HERO INTRO SECTION */}

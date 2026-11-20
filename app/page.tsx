@@ -146,6 +146,18 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeStepModal, handleNextStep, handlePrevStep]);
 
+  // Prevent background scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
     const el = document.getElementById(id);
@@ -180,39 +192,39 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#FAF9F5] text-[#0F1115] flex flex-col font-sans selection:bg-[#FFE500] selection:text-[#0F1115] relative overflow-x-clip">
       {/* ------------------------------------------------------------ */}
-      {/* 1. DISTINCTIVE DIAGONAL YELLOW STRIPES TOP BANNER */}
+      {/* 1. FIXED TOP WRAPPER (ANNOUNCEMENT BANNER + HEADER) */}
       {/* ------------------------------------------------------------ */}
-      <div className="w-full bg-[#FFE500] border-b-2 border-[#0F1115] overflow-hidden select-none">
-        <div className="flex items-center justify-between px-3 sm:px-6 py-2 text-xs font-mono font-bold tracking-wider uppercase text-[#0F1115]">
-          <div className="flex items-center space-x-2 sm:space-x-3 overflow-hidden">
-            {/* Diagonal Stripes Mini Box */}
-            <div className="w-7 h-4 bg-diagonal-stripes border border-[#0F1115] rounded-xs shrink-0" />
-            <span className="truncate">
-              SCSMENDA // PROGRAM KEWIRAUSAHAAN SISWA RESMI
-            </span>
-            <span className="hidden md:inline-block px-2 py-0.5 bg-[#0F1115] text-[#FFE500] text-[10px] rounded-full font-sans font-black">
-              100% PRAKTIK MANDIRI
-            </span>
-          </div>
+      <div className="fixed top-0 left-0 right-0 z-50">
+        {/* Distinctive Diagonal Yellow Stripes Top Banner */}
+        <div className="w-full bg-[#FFE500] border-b-2 border-[#0F1115] overflow-hidden select-none">
+          <div className="flex items-center justify-between px-3 sm:px-6 py-1.5 sm:py-2 text-[10px] sm:text-xs font-mono font-bold tracking-wider uppercase text-[#0F1115]">
+            <div className="flex items-center space-x-2 sm:space-x-3 overflow-hidden">
+              {/* Diagonal Stripes Mini Box */}
+              <div className="w-6 h-3.5 sm:w-7 sm:h-4 bg-diagonal-stripes border border-[#0F1115] rounded-xs shrink-0" />
+              <span className="truncate">
+                SCSMENDA // PROGRAM KEWIRAUSAHAAN SISWA RESMI
+              </span>
+              <span className="hidden md:inline-block px-2 py-0.5 bg-[#0F1115] text-[#FFE500] text-[10px] rounded-full font-sans font-black">
+                100% PRAKTIK MANDIRI
+              </span>
+            </div>
 
-          <div className="hidden sm:flex items-center space-x-3 shrink-0 text-[11px]">
-            <span>14 TAHAPAN</span>
-            <span>•</span>
-            <span>PRAKTIK BISNIS MANDIRI</span>
-            <span>•</span>
-            <span className="bg-[#0F1115] text-white px-2 py-0.5 rounded text-[10px]">
-              TA 2026/2027
-            </span>
+            <div className="hidden sm:flex items-center space-x-3 shrink-0 text-[11px]">
+              <span>14 TAHAPAN</span>
+              <span>•</span>
+              <span>PRAKTIK BISNIS MANDIRI</span>
+              <span>•</span>
+              <span className="bg-[#0F1115] text-white px-2 py-0.5 rounded text-[10px]">
+                TA 2026/2027
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* ------------------------------------------------------------ */}
-      {/* 2. MODERN CORPORATE MEMPHIS HEADER (STICKY TOP) */}
-      {/* ------------------------------------------------------------ */}
-      <header className="sticky top-0 z-50 bg-[#FAF9F5]/95 backdrop-blur-md border-b-2 border-[#0F1115] shadow-xs transition-shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-18 sm:h-20 gap-4 lg:gap-6">
+        {/* 2. MODERN CORPORATE MEMPHIS HEADER */}
+        <header className="bg-[#FAF9F5]/95 backdrop-blur-md border-b-2 border-[#0F1115] shadow-xs">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16 sm:h-20 gap-4 lg:gap-6">
             {/* Left: Brand with Official Logo & Circular Emblem */}
             <a href="#" className="flex items-center space-x-3 group shrink-0">
               <div className="relative w-14 h-14 sm:w-16 sm:h-16 bg-[#FFE500] border-2 border-[#0F1115] rounded-full p-1 flex items-center justify-center shadow-[3px_3px_0px_#0F1115] group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:shadow-[1px_1px_0px_#0F1115] transition-all overflow-hidden shrink-0">
@@ -308,156 +320,163 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Mobile Slide-down Drawer */}
+        </header>
+
+        {/* Mobile Slide-down Drawer right below header */}
         {mobileMenuOpen && (
-          <>
-            <div
-              className="fixed inset-0 bg-[#0F1115]/60 backdrop-blur-xs z-30 lg:hidden"
-              onClick={() => setMobileMenuOpen(false)}
-            />
-            <div className="relative z-40 lg:hidden border-b-2 border-[#0F1115] bg-[#FAF9F5] px-4 py-6 shadow-2xl max-h-[calc(100dvh-5rem)] overflow-y-auto animate-in slide-in-from-top duration-200">
-              <div className="max-w-7xl mx-auto space-y-4">
-                <div className="flex items-center justify-between border-b-2 border-[#0F1115] pb-3 text-xs font-mono font-bold text-[#525866]">
-                  <span>NAVIGASI PROGRAM</span>
-                  <span className="bg-[#FFE500] text-[#0F1115] px-2 py-0.5 rounded-full border border-[#0F1115]">
-                    VOL. 2026
-                  </span>
-                </div>
+          <div className="lg:hidden border-b-2 border-[#0F1115] bg-[#FAF9F5] px-4 py-5 shadow-2xl max-h-[calc(100dvh-6.5rem)] overflow-y-auto animate-in slide-in-from-top duration-200">
+            <div className="max-w-7xl mx-auto space-y-4">
+              <div className="flex items-center justify-between border-b-2 border-[#0F1115] pb-3 text-xs font-mono font-bold text-[#525866]">
+                <span>NAVIGASI PROGRAM</span>
+                <span className="bg-[#FFE500] text-[#0F1115] px-2 py-0.5 rounded-full border border-[#0F1115]">
+                  VOL. 2026
+                </span>
+              </div>
 
-                {/* Featured Video Promosi Link for Mobile */}
+              {/* Featured Video Promosi Link for Mobile */}
+              <button
+                onClick={() => scrollToSection("video-profil")}
+                className="w-full flex items-center justify-between p-3.5 bg-[#FFE500] border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFD028] transition-colors"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#0F1115] text-[#FFE500] flex items-center justify-center shrink-0">
+                    <Play className="w-4 h-4 fill-current ml-0.5" />
+                  </div>
+                  <div>
+                    <div className="font-display font-black text-sm text-[#0F1115]">
+                      VIDEO PROFIL RESMI
+                    </div>
+                    <div className="font-mono text-[10px] text-[#0F1115]/80 font-bold">
+                      Tonton dokumentasi & profil siswa
+                    </div>
+                  </div>
+                </div>
+                <span className="text-[10px] bg-[#0F1115] text-[#FFE500] font-black px-2 py-0.5 rounded-full uppercase">
+                  PUTAR
+                </span>
+              </button>
+
+              <div className="grid grid-cols-1 gap-2 text-sm font-mono font-bold uppercase">
                 <button
-                  onClick={() => scrollToSection("video-profil")}
-                  className="w-full flex items-center justify-between p-3.5 bg-[#FFE500] border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFD028] transition-colors"
+                  onClick={() => scrollToSection("overview")}
+                  className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
                 >
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#0F1115] text-[#FFE500] flex items-center justify-center shrink-0">
-                      <Play className="w-4 h-4 fill-current ml-0.5" />
-                    </div>
-                    <div>
-                      <div className="font-display font-black text-sm text-[#0F1115]">
-                        VIDEO PROFIL RESMI
-                      </div>
-                      <div className="font-mono text-[10px] text-[#0F1115]/80 font-bold">
-                        Tonton dokumentasi & profil siswa
-                      </div>
-                    </div>
-                  </div>
-                  <span className="text-[10px] bg-[#0F1115] text-[#FFE500] font-black px-2 py-0.5 rounded-full uppercase">
-                    PUTAR
-                  </span>
+                  <span>[ 01 ] Definisi & 3 Pilar</span>
+                  <ChevronRight className="w-4 h-4" />
                 </button>
+                <button
+                  onClick={() => scrollToSection("kegiatan")}
+                  className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
+                >
+                  <span>[ 02 ] 14 Tahapan Lengkap</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => scrollToSection("organisasi")}
+                  className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
+                >
+                  <span>[ 03 ] Struktur 5 Divisi</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => scrollToSection("tujuan")}
+                  className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
+                >
+                  <span>[ 04 ] 6 Capaian Mutu</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => scrollToSection("faq")}
+                  className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
+                >
+                  <span>[ 05 ] FAQ & Tanya Jawab</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => scrollToSection("daftar")}
+                  className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
+                >
+                  <span>[ 06 ] Pendaftaran & Kontak CP</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
 
-                <div className="grid grid-cols-1 gap-2 text-sm font-mono font-bold uppercase">
-                  <button
-                    onClick={() => scrollToSection("overview")}
-                    className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
-                  >
-                    <span>[ 01 ] Definisi & 3 Pilar</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => scrollToSection("kegiatan")}
-                    className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
-                  >
-                    <span>[ 02 ] 14 Tahapan Lengkap</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => scrollToSection("organisasi")}
-                    className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
-                  >
-                    <span>[ 03 ] Struktur 5 Divisi</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => scrollToSection("tujuan")}
-                    className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
-                  >
-                    <span>[ 04 ] 6 Capaian Mutu</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => scrollToSection("faq")}
-                    className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
-                  >
-                    <span>[ 05 ] FAQ & Tanya Jawab</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => scrollToSection("daftar")}
-                    className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
-                  >
-                    <span>[ 06 ] Pendaftaran & Kontak CP</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* Mobile Registration Card */}
-                <div className="p-4 bg-[#FFE500] border-2 border-[#0F1115] rounded-2xl shadow-[4px_4px_0px_#0F1115] space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Sparkles className="w-4 h-4 text-[#0F1115]" />
-                      <span className="font-display font-black text-sm text-[#0F1115]">
-                        PENDAFTARAN RESMI
-                      </span>
-                    </div>
-                    <span className="text-[10px] bg-[#0F1115] text-[#FFE500] font-mono font-black px-2 py-0.5 rounded-full uppercase">
-                      ONLINE
+              {/* Mobile Registration Card */}
+              <div className="p-4 bg-[#FFE500] border-2 border-[#0F1115] rounded-2xl shadow-[4px_4px_0px_#0F1115] space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Sparkles className="w-4 h-4 text-[#0F1115]" />
+                    <span className="font-display font-black text-sm text-[#0F1115]">
+                      PENDAFTARAN RESMI
                     </span>
                   </div>
-                  <p className="text-xs text-[#0F1115] font-sans font-medium">
-                    Gabung ke Student Company SMENDA dengan mengisi formulir atau hubungi narahubung.
-                  </p>
-                  <a
-                    href={REGISTRATION_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-clay-black w-full py-2.5 text-xs font-black uppercase tracking-wider inline-flex items-center justify-center space-x-2"
-                  >
-                    <span>Buka Google Form</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                  <div className="pt-2 border-t border-[#0F1115]/20">
-                    <span className="font-mono text-[10px] font-black uppercase text-[#0F1115] block mb-1.5">
-                      Contact Person (WhatsApp):
-                    </span>
-                    <div className="grid grid-cols-2 gap-2 text-xs font-mono font-bold">
-                      <a
-                        href={CONTACT_PERSONS[0].waUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 bg-white border border-[#0F1115] rounded-xl text-center shadow-[1px_1px_0px_#0F1115] hover:bg-[#FAF9F5] transition-colors"
-                      >
-                        <div>Daffa</div>
-                        <div className="text-[10px] text-[#525866] truncate">{CONTACT_PERSONS[0].phone}</div>
-                      </a>
-                      <a
-                        href={CONTACT_PERSONS[1].waUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 bg-white border border-[#0F1115] rounded-xl text-center shadow-[1px_1px_0px_#0F1115] hover:bg-[#FAF9F5] transition-colors"
-                      >
-                        <div>Aulia</div>
-                        <div className="text-[10px] text-[#525866] truncate">{CONTACT_PERSONS[1].phone}</div>
-                      </a>
-                    </div>
-                  </div>
+                  <span className="text-[10px] bg-[#0F1115] text-[#FFE500] font-mono font-black px-2 py-0.5 rounded-full uppercase">
+                    ONLINE
+                  </span>
                 </div>
-
-                <div className="pt-1">
-                  <button
-                    onClick={() => scrollToSection("kegiatan")}
-                    className="btn-clay-white w-full py-3.5 text-xs font-black tracking-wider uppercase flex items-center justify-center space-x-2"
-                  >
-                    <span>Jelajahi 14 Tahapan Sekarang</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
+                <p className="text-xs text-[#0F1115] font-sans font-medium">
+                  Gabung ke Student Company SMENDA dengan mengisi formulir atau hubungi narahubung.
+                </p>
+                <a
+                  href={REGISTRATION_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-clay-black w-full py-2.5 text-xs font-black uppercase tracking-wider inline-flex items-center justify-center space-x-2"
+                >
+                  <span>Buka Google Form</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+                <div className="pt-2 border-t border-[#0F1115]/20">
+                  <span className="font-mono text-[10px] font-black uppercase text-[#0F1115] block mb-1.5">
+                    Contact Person (WhatsApp):
+                  </span>
+                  <div className="grid grid-cols-2 gap-2 text-xs font-mono font-bold">
+                    <a
+                      href={CONTACT_PERSONS[0].waUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-white border border-[#0F1115] rounded-xl text-center shadow-[1px_1px_0px_#0F1115] hover:bg-[#FAF9F5] transition-colors"
+                    >
+                      <div>Daffa</div>
+                      <div className="text-[10px] text-[#525866] truncate">{CONTACT_PERSONS[0].phone}</div>
+                    </a>
+                    <a
+                      href={CONTACT_PERSONS[1].waUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-white border border-[#0F1115] rounded-xl text-center shadow-[1px_1px_0px_#0F1115] hover:bg-[#FAF9F5] transition-colors"
+                    >
+                      <div>Aulia</div>
+                      <div className="text-[10px] text-[#525866] truncate">{CONTACT_PERSONS[1].phone}</div>
+                    </a>
+                  </div>
                 </div>
               </div>
+
+              <div className="pt-1">
+                <button
+                  onClick={() => scrollToSection("kegiatan")}
+                  className="btn-clay-white w-full py-3.5 text-xs font-black tracking-wider uppercase flex items-center justify-center space-x-2"
+                >
+                  <span>Jelajahi 14 Tahapan Sekarang</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
-          </>
+          </div>
         )}
-      </header>
+      </div>
+
+      {/* Mobile Backdrop */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-[#0F1115]/60 backdrop-blur-xs z-40 lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Spacer so page content starts cleanly below the fixed navbar */}
+      <div className="h-[92px] sm:h-[114px] shrink-0" aria-hidden="true" />
 
       {/* ------------------------------------------------------------ */}
       {/* 3. HERO SECTION (CORPORATE MEMPHIS + 3D CLAY CENTERPIECE) */}
