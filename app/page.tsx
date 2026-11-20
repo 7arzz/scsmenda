@@ -221,7 +221,7 @@ export default function Home() {
       {/* ------------------------------------------------------------ */}
       <header className="sticky top-0 z-40 bg-[#FAF9F5]/90 backdrop-blur-md border-b-2 border-[#0F1115]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-18 sm:h-20">
+          <div className="flex items-center justify-between h-18 sm:h-20 gap-4 lg:gap-6">
             {/* Left: Brand with Official Logo & Circular Emblem */}
             <a href="#" className="flex items-center space-x-3 group shrink-0">
               <div className="relative w-14 h-14 sm:w-16 sm:h-16 bg-[#FFE500] border-2 border-[#0F1115] rounded-full p-1 flex items-center justify-center shadow-[3px_3px_0px_#0F1115] group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:shadow-[1px_1px_0px_#0F1115] transition-all overflow-hidden shrink-0">
@@ -286,12 +286,6 @@ export default function Home() {
                 [06] FAQ
               </button>
               <button
-                onClick={() => scrollToSection("daftar")}
-                className="px-3 py-2 rounded-lg hover:bg-[#FFE500] transition-colors"
-              >
-                [07] Pendaftaran
-              </button>
-              <button
                 onClick={() => scrollToSection("video-profil")}
                 className="px-3 py-2 rounded-lg bg-[#FFE500] hover:bg-[#FFD028] text-[#0F1115] border-2 border-[#0F1115] font-black inline-flex items-center space-x-1.5 shadow-[2px_2px_0px_#0F1115] transition-all ml-1"
               >
@@ -301,12 +295,12 @@ export default function Home() {
             </nav>
 
             {/* Right: Tactile Action Button & Mobile Hamburger */}
-            <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
+            <div className="flex items-center space-x-2 sm:space-x-3 shrink-0 ml-4 lg:ml-6">
               <a
                 href={REGISTRATION_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-clay-yellow hidden sm:inline-flex items-center justify-center px-4 sm:px-5 py-2.5 text-xs font-black tracking-wider uppercase"
+                className="btn-clay-yellow hidden sm:inline-flex items-center justify-center px-4 sm:px-5 py-2.5 text-xs font-black tracking-wider uppercase shadow-[3px_3px_0px_#0F1115]"
               >
                 <span>Daftar Sekarang</span>
                 <ExternalLink className="w-3.5 h-3.5 ml-1.5" />
@@ -679,7 +673,7 @@ export default function Home() {
                   {/* The actual transparent PNG image */}
                   <div className="relative z-10 px-6 pt-8 pb-4">
                     <Image
-                      src="/hero-illustration.png"
+                      src="/hero.png"
                       alt="Dua tokoh 3D berjabat tangan — simbol kolaborasi dan kemitraan bisnis dalam Student Company"
                       width={600}
                       height={600}
