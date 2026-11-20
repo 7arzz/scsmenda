@@ -9,6 +9,37 @@ export interface ActivityStep {
   highlight?: string;
 }
 
+export const REGISTRATION_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSeISpvBZWU9vTJggRTQQMf1A0CvEbjYCuueoCvfxzxopI4C5w/viewform";
+
+export const VIDEO_PROMOSI_URL =
+  "https://res.cloudinary.com/fiivnayk/video/upload/v1795097150/video_promosi_1.mp4";
+
+export interface ContactPerson {
+  name: string;
+  phone: string;
+  rawPhone: string;
+  role: string;
+  waUrl: string;
+}
+
+export const CONTACT_PERSONS: ContactPerson[] = [
+  {
+    name: "Daffa",
+    phone: "+62 856-0840-3583",
+    rawPhone: "6285608403583",
+    role: "Contact Person / Narahubung",
+    waUrl: "https://wa.me/6285608403583",
+  },
+  {
+    name: "Aulia",
+    phone: "+62 858-5436-4294",
+    rawPhone: "6285854364294",
+    role: "Contact Person / Narahubung",
+    waUrl: "https://wa.me/6285854364294",
+  },
+];
+
 export const ACTIVITIES: ActivityStep[] = [
   {
     id: 1,
@@ -417,5 +448,12 @@ export const FAQS: FaqItem[] = [
     answer:
       "Siswa mendapatkan sertifikat kompetensi kewirausahaan, pembagian gaji riil dari keuntungan operasional, dividen bagi pemegang saham, serta portofolio pengalaman manajerial nyata yang sangat bernilai untuk perguruan tinggi dan dunia industri.",
     category: "Hasil & Manfaat"
+  },
+  {
+    id: 5,
+    question: "Bagaimana cara mendaftar dan menghubungi panitia?",
+    answer:
+      "Siswa dapat mendaftar langsung secara online melalui tautan formulir Google Forms yang tersedia atau menghubungi Contact Person resmi: Daffa (+62 856-0840-3583) dan Aulia (+62 858-5436-4294) untuk informasi jadwal seleksi dan wawancara.",
+    category: "Pendaftaran & Kontak"
   }
 ];

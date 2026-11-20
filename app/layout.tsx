@@ -25,6 +25,14 @@ export const metadata: Metadata = {
   title: "SCSMENDA — Student Company SMENDA | Program Kewirausahaan Siswa",
   description:
     "Student Company merupakan program pendidikan kewirausahaan modern: beranggotakan siswa, dijalankan siswa, dan dikembangkan oleh siswa SMENDA.",
+  icons: {
+    icon: [
+      { url: "/logo.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({

@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ACTIVITIES,
   PROGRAM_GOALS,
@@ -9,6 +10,9 @@ import {
   MONTHLY_CYCLES,
   FAQS,
   ActivityStep,
+  REGISTRATION_URL,
+  VIDEO_PROMOSI_URL,
+  CONTACT_PERSONS,
 } from "./data";
 import {
   ClayHeroScene,
@@ -41,12 +45,19 @@ import {
   Briefcase,
   Award,
   Layers,
+  Play,
+  Film,
+  ExternalLink,
+  MessageSquare,
+  Phone,
 } from "lucide-react";
 
 export default function Home() {
   const [selectedPhase, setSelectedPhase] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [activeStepModal, setActiveStepModal] = useState<ActivityStep | null>(null);
+  const [activeStepModal, setActiveStepModal] = useState<ActivityStep | null>(
+    null,
+  );
   const [viewMode, setViewMode] = useState<"grid" | "rail">("grid");
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [showScrollTop, setShowScrollTop] = useState<boolean>(false);
@@ -103,7 +114,9 @@ export default function Home() {
 
   const handleNextStep = useCallback(() => {
     if (!activeStepModal) return;
-    const currentIndex = ACTIVITIES.findIndex((s) => s.id === activeStepModal.id);
+    const currentIndex = ACTIVITIES.findIndex(
+      (s) => s.id === activeStepModal.id,
+    );
     if (currentIndex < ACTIVITIES.length - 1) {
       setActiveStepModal(ACTIVITIES[currentIndex + 1]);
     }
@@ -111,7 +124,9 @@ export default function Home() {
 
   const handlePrevStep = useCallback(() => {
     if (!activeStepModal) return;
-    const currentIndex = ACTIVITIES.findIndex((s) => s.id === activeStepModal.id);
+    const currentIndex = ACTIVITIES.findIndex(
+      (s) => s.id === activeStepModal.id,
+    );
     if (currentIndex > 0) {
       setActiveStepModal(ACTIVITIES[currentIndex - 1]);
     }
@@ -142,11 +157,17 @@ export default function Home() {
   };
 
   const currentDivision = useMemo(() => {
-    return CORPORATE_DIVISIONS.find((d) => d.id === activeDivision) || CORPORATE_DIVISIONS[0];
+    return (
+      CORPORATE_DIVISIONS.find((d) => d.id === activeDivision) ||
+      CORPORATE_DIVISIONS[0]
+    );
   }, [activeDivision]);
 
   const currentMonthData = useMemo(() => {
-    return MONTHLY_CYCLES.find((m) => m.month === activeMonthCycle) || MONTHLY_CYCLES[0];
+    return (
+      MONTHLY_CYCLES.find((m) => m.month === activeMonthCycle) ||
+      MONTHLY_CYCLES[0]
+    );
   }, [activeMonthCycle]);
 
   // Map phase to friendly clay icon
@@ -203,12 +224,12 @@ export default function Home() {
           <div className="flex items-center justify-between h-18 sm:h-20">
             {/* Left: Brand with Official Logo & Circular Emblem */}
             <a href="#" className="flex items-center space-x-3 group shrink-0">
-              <div className="relative w-11 h-11 sm:w-12 sm:h-12 bg-[#FFE500] border-2 border-[#0F1115] rounded-full p-1.5 flex items-center justify-center shadow-[3px_3px_0px_#0F1115] group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:shadow-[1px_1px_0px_#0F1115] transition-all overflow-hidden shrink-0">
+              <div className="relative w-14 h-14 sm:w-16 sm:h-16 bg-[#FFE500] border-2 border-[#0F1115] rounded-full p-1 flex items-center justify-center shadow-[3px_3px_0px_#0F1115] group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:shadow-[1px_1px_0px_#0F1115] transition-all overflow-hidden shrink-0">
                 <Image
                   src="/logo.png"
                   alt="Logo Student Company of SMENDA"
-                  width={40}
-                  height={40}
+                  width={60}
+                  height={60}
                   className="w-full h-full object-contain rounded-full"
                   priority
                 />
@@ -264,17 +285,32 @@ export default function Home() {
               >
                 [06] FAQ
               </button>
+              <button
+                onClick={() => scrollToSection("daftar")}
+                className="px-3 py-2 rounded-lg hover:bg-[#FFE500] transition-colors"
+              >
+                [07] Pendaftaran
+              </button>
+              <button
+                onClick={() => scrollToSection("video-profil")}
+                className="px-3 py-2 rounded-lg bg-[#FFE500] hover:bg-[#FFD028] text-[#0F1115] border-2 border-[#0F1115] font-black inline-flex items-center space-x-1.5 shadow-[2px_2px_0px_#0F1115] transition-all ml-1"
+              >
+                <Play className="w-3.5 h-3.5 fill-current" />
+                <span>Video Profil</span>
+              </button>
             </nav>
 
             {/* Right: Tactile Action Button & Mobile Hamburger */}
             <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
-              <button
-                onClick={() => scrollToSection("kegiatan")}
+              <a
+                href={REGISTRATION_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-clay-yellow hidden sm:inline-flex items-center justify-center px-4 sm:px-5 py-2.5 text-xs font-black tracking-wider uppercase"
               >
-                <span>Mulai Eksplorasi</span>
-                <ArrowRight className="w-4 h-4 ml-1.5" />
-              </button>
+                <span>Daftar Sekarang</span>
+                <ExternalLink className="w-3.5 h-3.5 ml-1.5" />
+              </a>
 
               {/* Mobile Hamburger Button */}
               <button
@@ -283,7 +319,11 @@ export default function Home() {
                 aria-label="Buka menu navigasi"
                 aria-expanded={mobileMenuOpen}
               >
-                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                {mobileMenuOpen ? (
+                  <X className="w-5 h-5" />
+                ) : (
+                  <Menu className="w-5 h-5" />
+                )}
               </button>
             </div>
           </div>
@@ -304,6 +344,30 @@ export default function Home() {
                     VOL. 2026
                   </span>
                 </div>
+
+                {/* Featured Video Promosi Link for Mobile */}
+                <button
+                  onClick={() => scrollToSection("video-profil")}
+                  className="w-full flex items-center justify-between p-3.5 bg-[#FFE500] border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFD028] transition-colors"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 rounded-lg bg-[#0F1115] text-[#FFE500] flex items-center justify-center shrink-0">
+                      <Play className="w-4 h-4 fill-current ml-0.5" />
+                    </div>
+                    <div>
+                      <div className="font-display font-black text-sm text-[#0F1115]">
+                        VIDEO PROFIL RESMI
+                      </div>
+                      <div className="font-mono text-[10px] text-[#0F1115]/80 font-bold">
+                        Tonton dokumentasi & profil siswa
+                      </div>
+                    </div>
+                  </div>
+                  <span className="text-[10px] bg-[#0F1115] text-[#FFE500] font-black px-2 py-0.5 rounded-full uppercase">
+                    PUTAR
+                  </span>
+                </button>
+
                 <div className="grid grid-cols-1 gap-2 text-sm font-mono font-bold uppercase">
                   <button
                     onClick={() => scrollToSection("overview")}
@@ -347,12 +411,71 @@ export default function Home() {
                     <span>[ 06 ] FAQ & Tanya Jawab</span>
                     <ChevronRight className="w-4 h-4" />
                   </button>
+                  <button
+                    onClick={() => scrollToSection("daftar")}
+                    className="flex items-center justify-between p-3.5 bg-white border-2 border-[#0F1115] rounded-xl shadow-[3px_3px_0px_#0F1115] text-left hover:bg-[#FFE500] transition-colors"
+                  >
+                    <span>[ 07 ] Pendaftaran & Kontak CP</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
                 </div>
 
-                <div className="pt-2">
+                {/* Mobile Registration Card */}
+                <div className="p-4 bg-[#FFE500] border-2 border-[#0F1115] rounded-2xl shadow-[4px_4px_0px_#0F1115] space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Sparkles className="w-4 h-4 text-[#0F1115]" />
+                      <span className="font-display font-black text-sm text-[#0F1115]">
+                        PENDAFTARAN RESMI
+                      </span>
+                    </div>
+                    <span className="text-[10px] bg-[#0F1115] text-[#FFE500] font-mono font-black px-2 py-0.5 rounded-full uppercase">
+                      ONLINE
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#0F1115] font-sans font-medium">
+                    Gabung ke Student Company SMENDA dengan mengisi formulir atau hubungi narahubung.
+                  </p>
+                  <a
+                    href={REGISTRATION_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-clay-black w-full py-2.5 text-xs font-black uppercase tracking-wider inline-flex items-center justify-center space-x-2"
+                  >
+                    <span>Buka Google Form</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                  <div className="pt-2 border-t border-[#0F1115]/20">
+                    <span className="font-mono text-[10px] font-black uppercase text-[#0F1115] block mb-1.5">
+                      Contact Person (WhatsApp):
+                    </span>
+                    <div className="grid grid-cols-2 gap-2 text-xs font-mono font-bold">
+                      <a
+                        href={CONTACT_PERSONS[0].waUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 bg-white border border-[#0F1115] rounded-xl text-center shadow-[1px_1px_0px_#0F1115] hover:bg-[#FAF9F5] transition-colors"
+                      >
+                        <div>Daffa</div>
+                        <div className="text-[10px] text-[#525866] truncate">{CONTACT_PERSONS[0].phone}</div>
+                      </a>
+                      <a
+                        href={CONTACT_PERSONS[1].waUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 bg-white border border-[#0F1115] rounded-xl text-center shadow-[1px_1px_0px_#0F1115] hover:bg-[#FAF9F5] transition-colors"
+                      >
+                        <div>Aulia</div>
+                        <div className="text-[10px] text-[#525866] truncate">{CONTACT_PERSONS[1].phone}</div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-1">
                   <button
                     onClick={() => scrollToSection("kegiatan")}
-                    className="btn-clay-yellow w-full py-3.5 text-xs font-black tracking-wider uppercase flex items-center justify-center space-x-2"
+                    className="btn-clay-white w-full py-3.5 text-xs font-black tracking-wider uppercase flex items-center justify-center space-x-2"
                   >
                     <span>Jelajahi 14 Tahapan Sekarang</span>
                     <ArrowRight className="w-4 h-4" />
@@ -392,7 +515,9 @@ export default function Home() {
                 <h1 className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl leading-[0.98] tracking-tight uppercase text-[#0F1115]">
                   MENCETAK <br />
                   <span className="relative inline-block my-1">
-                    <span className="relative z-10 px-2 text-[#0F1115]">WIRAUSAHA</span>
+                    <span className="relative z-10 px-2 text-[#0F1115]">
+                      WIRAUSAHA
+                    </span>
                     <span className="absolute inset-x-0 bottom-1 sm:bottom-2 h-6 sm:h-9 bg-[#FFE500] -z-0 rounded-lg transform -rotate-1 border-2 border-[#0F1115]" />
                   </span>
                   <br />
@@ -409,7 +534,8 @@ export default function Home() {
                 {/* Diagonal Stripe accent ribbon on top edge of card */}
                 <div className="absolute top-0 inset-x-0 h-2 bg-diagonal-stripes border-b border-[#0F1115]" />
                 <p className="text-sm sm:text-base md:text-lg text-[#181A20] leading-relaxed font-sans pt-1">
-                  Program pendidikan kewirausahaan modern dengan membentuk korporasi riil yang{" "}
+                  Program pendidikan kewirausahaan modern dengan membentuk
+                  korporasi riil yang{" "}
                   <strong className="bg-[#FFE500] px-1.5 py-0.5 rounded text-[#0F1115] border border-[#0F1115]/30">
                     beranggotakan siswa
                   </strong>
@@ -426,22 +552,59 @@ export default function Home() {
               </div>
 
               {/* Interactive CTA Button Cluster */}
-              <div className="pt-2 flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <button
-                  onClick={() => scrollToSection("kegiatan")}
-                  className="btn-clay-yellow px-6 py-3.5 text-xs sm:text-sm font-black tracking-wider uppercase inline-flex items-center justify-center space-x-2"
+              <div className="pt-2 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
+                <a
+                  href={REGISTRATION_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-clay-yellow w-full sm:w-auto px-6 py-3.5 text-xs sm:text-sm font-black tracking-wider uppercase inline-flex items-center justify-center space-x-2 shadow-[4px_4px_0px_#0F1115]"
                 >
-                  <span>Jelajahi 14 Tahapan</span>
-                  <ArrowUpRight className="w-4 h-4" />
+                  <Sparkles className="w-4 h-4 shrink-0" />
+                  <span>Daftar Sekarang (Google Form)</span>
+                  <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                </a>
+
+                <button
+                  onClick={() => scrollToSection("video-profil")}
+                  className="btn-clay-white w-full sm:w-auto px-6 py-3.5 text-xs sm:text-sm font-black tracking-wider uppercase inline-flex items-center justify-center space-x-2 border-2 border-[#0F1115] rounded-full bg-white shadow-[3px_3px_0px_#0F1115] hover:bg-neutral-50 active:translate-x-0.5 active:translate-y-0.5 transition-all"
+                >
+                  <Play className="w-4 h-4 fill-current text-[#0F1115] shrink-0" />
+                  <span>Putar Video Profil</span>
                 </button>
 
                 <button
-                  onClick={() => scrollToSection("siklus")}
-                  className="btn-clay-white px-6 py-3.5 text-xs sm:text-sm font-black tracking-wider uppercase inline-flex items-center justify-center space-x-2"
+                  onClick={() => scrollToSection("kegiatan")}
+                  className="btn-clay-white w-full sm:w-auto px-6 py-3.5 text-xs sm:text-sm font-black tracking-wider uppercase inline-flex items-center justify-center space-x-2 border-2 border-[#0F1115] rounded-full bg-white shadow-[3px_3px_0px_#0F1115] hover:bg-neutral-50 active:translate-x-0.5 active:translate-y-0.5 transition-all"
                 >
-                  <Calendar className="w-4 h-4 text-[#0F1115]" />
-                  <span>Siklus 3 Bulan</span>
+                  <span>14 Tahapan</span>
+                  <ArrowUpRight className="w-4 h-4 shrink-0" />
                 </button>
+              </div>
+
+              {/* Contact Person Direct WhatsApp Badges in Hero */}
+              <div className="pt-1 flex flex-wrap items-center gap-2 text-xs font-mono">
+                <span className="font-bold text-[#525866] flex items-center space-x-1 shrink-0">
+                  <Phone className="w-3.5 h-3.5 text-[#0F1115]" />
+                  <span>Narahubung:</span>
+                </span>
+                <a
+                  href={CONTACT_PERSONS[0].waUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-1.5 px-3 py-1 bg-white border border-[#0F1115] rounded-full font-bold shadow-[1px_1px_0px_#0F1115] hover:bg-[#FFE500] hover:shadow-none transition-all text-[11px] sm:text-xs"
+                >
+                  <span className="w-2 h-2 rounded-full bg-[#10B981] shrink-0" />
+                  <span>Daffa: {CONTACT_PERSONS[0].phone}</span>
+                </a>
+                <a
+                  href={CONTACT_PERSONS[1].waUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-1.5 px-3 py-1 bg-white border border-[#0F1115] rounded-full font-bold shadow-[1px_1px_0px_#0F1115] hover:bg-[#FFE500] hover:shadow-none transition-all text-[11px] sm:text-xs"
+                >
+                  <span className="w-2 h-2 rounded-full bg-[#10B981] shrink-0" />
+                  <span>Aulia: {CONTACT_PERSONS[1].phone}</span>
+                </a>
               </div>
 
               {/* Micro Trust Indicators */}
@@ -461,10 +624,174 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Column: 3D Clay Illustration Centerpiece */}
-            <div className="lg:col-span-5 relative flex justify-center">
-              <div className="w-full max-w-lg lg:max-w-none">
-                <ClayHeroScene className="w-full transform hover:scale-[1.01] transition-transform duration-300" />
+            {/* Right Column: Hero Illustration with Memphis Background */}
+            <div className="lg:col-span-5 relative flex justify-center items-center">
+              <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-none">
+
+                {/* ── Layered Memphis Decorative Background Card ── */}
+                <div className="relative rounded-3xl border-2 border-[#0F1115] overflow-hidden shadow-[8px_8px_0px_#0F1115]">
+
+                  {/* Layer 1: Yellow base */}
+                  <div className="absolute inset-0 bg-[#FFE500]" />
+
+                  {/* Layer 2: Dot-grid overlay */}
+                  <div className="absolute inset-0 bg-dot-pattern opacity-30" />
+
+                  {/* Layer 3: Big diagonal stripe block — bottom-left */}
+                  <div className="absolute -bottom-6 -left-6 w-52 h-52 bg-diagonal-stripes opacity-40 rounded-3xl rotate-6" />
+
+                  {/* Layer 4: Solid black circle — top-right accent */}
+                  <div className="absolute -top-8 -right-8 w-40 h-40 bg-[#0F1115] rounded-full opacity-10" />
+
+                  {/* Layer 5: Coral blob — top-left */}
+                  <div className="absolute top-4 left-4 w-16 h-16 bg-[#FF5A36] rounded-full opacity-25 blur-sm" />
+
+                  {/* Layer 6: Blue blob — bottom-right */}
+                  <div className="absolute bottom-6 right-4 w-20 h-20 bg-[#0284C7] rounded-full opacity-20 blur-sm" />
+
+                  {/* Layer 7: Thin black diagonal accent stripe — top bar */}
+                  <div className="absolute top-0 inset-x-0 h-2 bg-hazard-stripes opacity-70" />
+
+                  {/* Memphis floating geometric shapes */}
+                  {/* Small yellow circle top-left */}
+                  <div className="absolute top-6 left-6 w-6 h-6 bg-white border-2 border-[#0F1115] rounded-full" />
+                  {/* Small black square bottom-right */}
+                  <div className="absolute bottom-10 right-6 w-5 h-5 bg-[#0F1115] rounded-sm rotate-12" />
+                  {/* Thin white cross top-right */}
+                  <svg className="absolute top-8 right-10 w-10 h-10 opacity-60" viewBox="0 0 40 40" fill="none">
+                    <line x1="20" y1="4" x2="20" y2="36" stroke="#0F1115" strokeWidth="4" strokeLinecap="round"/>
+                    <line x1="4" y1="20" x2="36" y2="20" stroke="#0F1115" strokeWidth="4" strokeLinecap="round"/>
+                  </svg>
+                  {/* Squiggle bottom-left */}
+                  <svg className="absolute bottom-8 left-8 w-16 h-8 opacity-50" viewBox="0 0 64 24" fill="none">
+                    <path d="M0 12 Q8 0 16 12 T32 12 T48 12 T64 12" stroke="#0F1115" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
+                  </svg>
+                  {/* Stars */}
+                  <svg className="absolute top-16 right-6 w-8 h-8 opacity-50" viewBox="0 0 32 32" fill="none">
+                    <path d="M16 4 L18.5 13 L28 13.5 L21 19.5 L23.5 29 L16 24 L8.5 29 L11 19.5 L4 13.5 L13.5 13 Z" fill="#0F1115"/>
+                  </svg>
+
+                  {/* Floating badge — top-left */}
+                  <div className="absolute top-4 right-4 z-20 bg-[#0F1115] text-[#FFE500] border border-[#0F1115] rounded-full px-3 py-1 text-[10px] font-mono font-black uppercase shadow-sm">
+                    Kolaborasi Nyata
+                  </div>
+
+                  {/* The actual transparent PNG image */}
+                  <div className="relative z-10 px-6 pt-8 pb-4">
+                    <Image
+                      src="/hero-illustration.png"
+                      alt="Dua tokoh 3D berjabat tangan — simbol kolaborasi dan kemitraan bisnis dalam Student Company"
+                      width={600}
+                      height={600}
+                      className="w-full h-auto object-contain drop-shadow-2xl"
+                      priority
+                    />
+                  </div>
+
+                  {/* Bottom caption bar */}
+                  <div className="relative z-10 bg-[#0F1115]/90 px-5 py-3 flex items-center justify-between">
+                    <span className="font-mono text-[10px] font-black uppercase text-[#FFE500] tracking-wider">
+                      🤝 Perusahaan Siswa SMENDA
+                    </span>
+                    <span className="font-mono text-[10px] font-bold text-white opacity-70">
+                      EST. 2026
+                    </span>
+                  </div>
+                </div>
+
+                {/* Floating stat chips around the card */}
+                <div className="absolute -top-3 sm:-top-4 -left-2 sm:-left-4 z-20 bg-white border-2 border-[#0F1115] rounded-2xl px-2.5 sm:px-3 py-1.5 sm:py-2 shadow-[3px_3px_0px_#FFE500]">
+                  <div className="font-display font-black text-base sm:text-lg text-[#0F1115] leading-none">14</div>
+                  <div className="font-mono text-[8px] sm:text-[9px] font-bold text-[#525866] uppercase">Tahapan</div>
+                </div>
+
+                <div className="absolute -bottom-3 sm:-bottom-4 -right-2 sm:-right-4 z-20 bg-[#FFE500] border-2 border-[#0F1115] rounded-2xl px-2.5 sm:px-3 py-1.5 sm:py-2 shadow-[3px_3px_0px_#0F1115]">
+                  <div className="font-display font-black text-base sm:text-lg text-[#0F1115] leading-none">100%</div>
+                  <div className="font-mono text-[8px] sm:text-[9px] font-black text-[#0F1115] uppercase">Mandiri</div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------ */}
+      {/* 3B. EMBEDDED OFFICIAL VIDEO SHOWCASE (DIRECTLY UNDER HERO) */}
+      {/* ------------------------------------------------------------ */}
+      <section
+        id="video-profil"
+        className="bg-[#FAF9F5] border-b-2 border-[#0F1115] py-12 sm:py-16 relative overflow-hidden"
+      >
+        {/* Playful Memphis Accent Background */}
+        <div className="absolute top-0 inset-x-0 h-2 bg-diagonal-stripes border-b border-[#0F1115]" />
+        <div className="absolute -top-10 -right-10 w-44 h-44 bg-dot-pattern-yellow opacity-40 pointer-events-none" />
+        <div className="absolute -bottom-10 -left-10 w-44 h-44 bg-dot-pattern opacity-30 pointer-events-none" />
+
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative space-y-6">
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2">
+            <div className="space-y-2">
+              <div className="inline-flex items-center space-x-2 bg-[#FFE500] border-2 border-[#0F1115] rounded-full px-3.5 py-1 shadow-[2px_2px_0px_#0F1115]">
+                <Film className="w-3.5 h-3.5 text-[#0F1115]" />
+                <span className="font-mono text-xs font-black uppercase text-[#0F1115]">
+                  DOKUMENTASI RESMI // VIDEO PROFIL SISWA
+                </span>
+              </div>
+              <h2 className="font-display font-black text-2xl sm:text-4xl lg:text-5xl text-[#0F1115] uppercase tracking-tight">
+                Perjalanan Nyata Ekosistem Bisnis SMENDA
+              </h2>
+            </div>
+            <p className="text-xs sm:text-sm text-[#525866] font-mono font-bold max-w-md">
+              Saksikan antusiasme, kreativitas, dan proses pembelajaran korporasi siswa dari pembentukan perusahaan hingga likuidasi dan CSR.
+            </p>
+          </div>
+
+          {/* Tactile 3D Clay Frame with Real Embedded Video */}
+          <div className="bg-[#0F1115] border-2 border-[#0F1115] rounded-3xl shadow-[8px_8px_0px_#FFE500] overflow-hidden">
+            {/* Window Top Titlebar */}
+            <div className="flex items-center justify-between px-3 sm:px-6 py-2.5 sm:py-3 bg-white border-b-2 border-[#0F1115]">
+              <div className="flex items-center space-x-1.5 sm:space-x-2 min-w-0 mr-2">
+                <span className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-[#FF5A36] border border-[#0F1115] shrink-0" />
+                <span className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-[#FFE500] border border-[#0F1115] shrink-0" />
+                <span className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-[#10B981] border border-[#0F1115] shrink-0" />
+                <span className="font-mono text-[10px] sm:text-xs font-black uppercase text-[#0F1115] ml-1 sm:ml-2 truncate">
+                  videoPromosi.mp4 // SCSMENDA Official Video
+                </span>
+              </div>
+              <div className="flex items-center space-x-2 shrink-0">
+                <span className="px-2 sm:px-2.5 py-0.5 bg-[#FFE500] text-[#0F1115] border border-[#0F1115] rounded-full font-mono text-[9px] sm:text-[10px] font-black uppercase">
+                  1080p Full HD
+                </span>
+              </div>
+            </div>
+
+            {/* Embedded Video Element */}
+            <div className="relative aspect-video w-full bg-black flex items-center justify-center">
+              <video
+                src={VIDEO_PROMOSI_URL}
+                poster="/hero.png"
+                controls
+                playsInline
+                preload="metadata"
+                className="w-full h-full object-contain"
+              >
+                Browser Anda tidak mendukung tag video HTML5.
+              </video>
+            </div>
+
+            {/* Video Footer Info Bar */}
+            <div className="px-4 sm:px-6 py-3.5 bg-[#FAF9F5] text-[#0F1115] border-t-2 border-[#0F1115] flex flex-wrap items-center justify-between gap-3 text-xs font-mono font-bold">
+              <div className="flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse" />
+                <span>Dokumentasi Resmi Siswa Student Company SMENDA</span>
+              </div>
+              <div className="flex items-center space-x-4 text-[11px] text-[#525866]">
+                <span>Format: MP4</span>
+                <span>•</span>
+                <span>Resolusi: 1080p</span>
+                <span>•</span>
+                <span>Audio Stereo</span>
               </div>
             </div>
           </div>
@@ -507,7 +834,10 @@ export default function Home() {
                     MASA INKUBASI
                   </span>
                   <div className="font-display font-black text-3xl sm:text-4xl text-[#0F1115] mt-1">
-                    03 <span className="text-base font-bold text-[#525866]">Bulan</span>
+                    03{" "}
+                    <span className="text-base font-bold text-[#525866]">
+                      Bulan
+                    </span>
                   </div>
                 </div>
                 <div className="w-12 h-12 bg-[#38BDF8] border-2 border-[#0F1115] rounded-2xl flex items-center justify-center shadow-[2px_2px_0px_#0F1115]">
@@ -528,7 +858,10 @@ export default function Home() {
                     STRUKTUR TIM
                   </span>
                   <div className="font-display font-black text-3xl sm:text-4xl text-[#0F1115] mt-1">
-                    05 <span className="text-base font-bold text-[#525866]">Divisi</span>
+                    05{" "}
+                    <span className="text-base font-bold text-[#525866]">
+                      Divisi
+                    </span>
                   </div>
                 </div>
                 <div className="w-12 h-12 bg-[#FF5A36] border-2 border-[#0F1115] rounded-2xl flex items-center justify-center shadow-[2px_2px_0px_#0F1115]">
@@ -567,7 +900,10 @@ export default function Home() {
       {/* ------------------------------------------------------------ */}
       {/* 5. SECTION 01: DEFINITION & 3 CORE PILLARS (INFOGRAPHIC SPREAD) */}
       {/* ------------------------------------------------------------ */}
-      <section id="overview" className="border-b-2 border-[#0F1115] bg-[#FAF9F5] py-14 sm:py-20 lg:py-24">
+      <section
+        id="overview"
+        className="border-b-2 border-[#0F1115] bg-[#FAF9F5] py-14 sm:py-20 lg:py-24"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header Label with Diagonal Yellow Stripe Accent */}
           <div className="flex items-center space-x-3 mb-4">
@@ -592,7 +928,9 @@ export default function Home() {
                 <strong className="text-[#0F1115] font-black underline decoration-[#FFE500] decoration-4 underline-offset-4">
                   &quot;Perusahaan Siswa&quot;
                 </strong>
-                . Ini bukan sekadar simulasi teori di dalam kelas, melainkan pembentukan entitas bisnis riil yang memiliki akuntabilitas legal intra-sekolah.
+                . Ini bukan sekadar simulasi teori di dalam kelas, melainkan
+                pembentukan entitas bisnis riil yang memiliki akuntabilitas
+                legal intra-sekolah.
               </p>
 
               <div className="bg-white border-2 border-[#0F1115] rounded-2xl p-5 shadow-[4px_4px_0px_#0F1115] space-y-3">
@@ -603,19 +941,27 @@ export default function Home() {
                 <ul className="space-y-2 text-xs sm:text-sm font-mono text-[#525866]">
                   <li className="flex items-start">
                     <span className="w-2 h-2 rounded-full bg-[#FFE500] border border-[#0F1115] mt-1.5 mr-2 shrink-0" />
-                    <span>Perusahaan beranggotakan siswa lintas kelas & jurusan</span>
+                    <span>
+                      Perusahaan beranggotakan siswa lintas kelas & jurusan
+                    </span>
                   </li>
                   <li className="flex items-start">
                     <span className="w-2 h-2 rounded-full bg-[#FFE500] border border-[#0F1115] mt-1.5 mr-2 shrink-0" />
-                    <span>Struktur manajemen lengkap setara korporasi profesional</span>
+                    <span>
+                      Struktur manajemen lengkap setara korporasi profesional
+                    </span>
                   </li>
                   <li className="flex items-start">
                     <span className="w-2 h-2 rounded-full bg-[#FFE500] border border-[#0F1115] mt-1.5 mr-2 shrink-0" />
-                    <span>Laporan keuangan transparan diaudit guru pembimbing</span>
+                    <span>
+                      Laporan keuangan transparan diaudit guru pembimbing
+                    </span>
                   </li>
                   <li className="flex items-start">
                     <span className="w-2 h-2 rounded-full bg-[#FFE500] border border-[#0F1115] mt-1.5 mr-2 shrink-0" />
-                    <span>Alokasi laba bersih untuk dividen, gaji, dan CSR sosial</span>
+                    <span>
+                      Alokasi laba bersih untuk dividen, gaji, dan CSR sosial
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -637,7 +983,10 @@ export default function Home() {
                   Beranggotakan Siswa
                 </h3>
                 <p className="text-sm sm:text-base text-[#525866] leading-relaxed">
-                  Seluruh anggota adalah siswa SMENDA yang disaring melalui pendaftaran saat kegiatan MPLS dan proses wawancara kompetensi. Setiap siswa ditempatkan pada posisi strategis sesuai minat dan bakat manajerialnya.
+                  Seluruh anggota adalah siswa SMENDA yang disaring melalui
+                  pendaftaran saat kegiatan MPLS dan proses wawancara
+                  kompetensi. Setiap siswa ditempatkan pada posisi strategis
+                  sesuai minat dan bakat manajerialnya.
                 </p>
               </div>
 
@@ -655,7 +1004,10 @@ export default function Home() {
                   Dijalankan Siswa
                 </h3>
                 <p className="text-sm sm:text-base text-[#525866] leading-relaxed">
-                  Siswa sendiri yang merumuskan Standard Operating Procedure (SOP), menyusun Business Plan (BP), mengadakan weekly meeting berkala, mengatur rantai pasok produksi, dan memasarkan produk langsung ke konsumen.
+                  Siswa sendiri yang merumuskan Standard Operating Procedure
+                  (SOP), menyusun Business Plan (BP), mengadakan weekly meeting
+                  berkala, mengatur rantai pasok produksi, dan memasarkan produk
+                  langsung ke konsumen.
                 </p>
               </div>
 
@@ -673,7 +1025,10 @@ export default function Home() {
                   Dikembangkan oleh Siswa
                 </h3>
                 <p className="text-sm sm:text-base text-[#525866] leading-relaxed">
-                  Siswa secara mandiri mengembangkan nilai merek (brand equity), menyalurkan kepedulian sosial melalui program CSR dari laba bersih, serta menikmati hasil nyata berupa dividen saham dan gaji bulanan.
+                  Siswa secara mandiri mengembangkan nilai merek (brand equity),
+                  menyalurkan kepedulian sosial melalui program CSR dari laba
+                  bersih, serta menikmati hasil nyata berupa dividen saham dan
+                  gaji bulanan.
                 </p>
               </div>
             </div>
@@ -684,7 +1039,10 @@ export default function Home() {
       {/* ------------------------------------------------------------ */}
       {/* 6. SECTION 02: 14 TAHAPAN KEGIATAN (MASTER INFOGRAPHIC EXPLORER) */}
       {/* ------------------------------------------------------------ */}
-      <section id="kegiatan" className="border-b-2 border-[#0F1115] bg-white py-14 sm:py-20 lg:py-24">
+      <section
+        id="kegiatan"
+        className="border-b-2 border-[#0F1115] bg-white py-14 sm:py-20 lg:py-24"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header Block */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b-2 border-[#0F1115]">
@@ -699,7 +1057,9 @@ export default function Home() {
                 14 Tahapan Kegiatan
               </h2>
               <p className="text-sm sm:text-base text-[#525866] leading-relaxed">
-                Jelajahi alur terstruktur setiap langkah perjalanan perusahaan siswa dari pendaftaran awal MPLS hingga likuidasi dan pembagian keuntungan.
+                Jelajahi alur terstruktur setiap langkah perjalanan perusahaan
+                siswa dari pendaftaran awal MPLS hingga likuidasi dan pembagian
+                keuntungan.
               </p>
             </div>
 
@@ -790,7 +1150,10 @@ export default function Home() {
           <div className="py-3 flex items-center justify-between text-xs font-mono font-bold text-[#525866]">
             <div>
               MENAMPILKAN{" "}
-              <span className="text-[#0F1115] font-black">{filteredActivities.length}</span> DARI 14 TAHAPAN RESMI
+              <span className="text-[#0F1115] font-black">
+                {filteredActivities.length}
+              </span>{" "}
+              DARI 14 TAHAPAN RESMI
             </div>
             {searchQuery && (
               <div className="truncate max-w-[200px] sm:max-w-none text-[#0F1115]">
@@ -834,9 +1197,16 @@ export default function Home() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-display font-black text-lg sm:text-xl text-[#0F1115] mb-2.5 group-hover:underline decoration-[#FFE500] decoration-2 underline-offset-4">
-                      {step.title}
-                    </h3>
+                    <div className="flex items-center justify-between gap-2 mb-2.5">
+                      <h3 className="font-display font-black text-lg sm:text-xl text-[#0F1115] group-hover:underline decoration-[#FFE500] decoration-2 underline-offset-4">
+                        {step.title}
+                      </h3>
+                      {step.id === 1 && (
+                        <span className="bg-[#FFE500] text-[#0F1115] border border-[#0F1115] text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded-full shrink-0 shadow-[1px_1px_0px_#0F1115]">
+                          Form Online
+                        </span>
+                      )}
+                    </div>
 
                     {/* Description preview */}
                     <p className="text-xs sm:text-sm text-[#525866] leading-relaxed line-clamp-3">
@@ -884,9 +1254,16 @@ export default function Home() {
                               {step.tag}
                             </span>
                           </div>
-                          <h3 className="font-display font-black text-base sm:text-lg text-[#0F1115]">
-                            {step.title}
-                          </h3>
+                          <div className="flex items-center justify-between gap-2">
+                            <h3 className="font-display font-black text-base sm:text-lg text-[#0F1115]">
+                              {step.title}
+                            </h3>
+                            {step.id === 1 && (
+                              <span className="bg-[#FFE500] text-[#0F1115] border border-[#0F1115] text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded-full shrink-0 shadow-[1px_1px_0px_#0F1115]">
+                                Form Online
+                              </span>
+                            )}
+                          </div>
                           <p className="text-xs text-[#525866] line-clamp-2 mt-1">
                             {step.description}
                           </p>
@@ -911,7 +1288,8 @@ export default function Home() {
           {filteredActivities.length === 0 && (
             <div className="text-center py-16 bg-[#FAF9F5] border-2 border-[#0F1115] rounded-2xl p-8 shadow-[4px_4px_0px_#0F1115] mt-6">
               <p className="font-mono text-sm text-[#525866] font-bold">
-                Tidak ada tahapan yang cocok dengan kata kunci &quot;{searchQuery}&quot;.
+                Tidak ada tahapan yang cocok dengan kata kunci &quot;
+                {searchQuery}&quot;.
               </p>
               <button
                 onClick={() => {
@@ -930,7 +1308,10 @@ export default function Home() {
       {/* ------------------------------------------------------------ */}
       {/* 7. SECTION 03: SIKLUS 3 BULAN (INTERACTIVE ROADMAP INFOGRAPHIC) */}
       {/* ------------------------------------------------------------ */}
-      <section id="siklus" className="border-b-2 border-[#0F1115] bg-[#FAF9F5] py-14 sm:py-20 lg:py-24">
+      <section
+        id="siklus"
+        className="border-b-2 border-[#0F1115] bg-[#FAF9F5] py-14 sm:py-20 lg:py-24"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Marker */}
           <div className="flex items-center space-x-3 mb-4">
@@ -946,7 +1327,9 @@ export default function Home() {
                 Siklus 3 Bulan Operasional
               </h2>
               <p className="text-sm sm:text-base text-[#525866] leading-relaxed">
-                Setiap entitas bisnis siswa menjalani siklus hidup berdurasi 3 bulan terukur, mulai dari inkubasi ide hingga hari puncak likuidasi.
+                Setiap entitas bisnis siswa menjalani siklus hidup berdurasi 3
+                bulan terukur, mulai dari inkubasi ide hingga hari puncak
+                likuidasi.
               </p>
             </div>
 
@@ -1015,9 +1398,15 @@ export default function Home() {
               <div className="lg:col-span-5 flex justify-center">
                 <div className="w-full max-w-xs bg-[#FAF9F5] border-2 border-[#0F1115] rounded-2xl p-6 text-center shadow-[4px_4px_0px_#0F1115] space-y-4">
                   <div className="w-24 h-24 mx-auto flex items-center justify-center">
-                    {activeMonthCycle === 1 && <ClayBriefcase className="w-24 h-24" />}
-                    {activeMonthCycle === 2 && <ClayRocket className="w-24 h-24" />}
-                    {activeMonthCycle === 3 && <ClayPiggyBank className="w-24 h-24" />}
+                    {activeMonthCycle === 1 && (
+                      <ClayBriefcase className="w-24 h-24" />
+                    )}
+                    {activeMonthCycle === 2 && (
+                      <ClayRocket className="w-24 h-24" />
+                    )}
+                    {activeMonthCycle === 3 && (
+                      <ClayPiggyBank className="w-24 h-24" />
+                    )}
                   </div>
                   <div>
                     <div className="font-display font-black text-2xl text-[#0F1115]">
@@ -1028,9 +1417,12 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="p-3 bg-white border border-[#0F1115] rounded-xl text-xs font-mono text-[#0F1115] font-bold">
-                    {activeMonthCycle === 1 && "Fokus: SOP & Desain Produk Inovatif"}
-                    {activeMonthCycle === 2 && "Fokus: Konsinyasi & Target Omzet Pasar"}
-                    {activeMonthCycle === 3 && "Fokus: Penyaluran CSR & Pembagian Dividen"}
+                    {activeMonthCycle === 1 &&
+                      "Fokus: SOP & Desain Produk Inovatif"}
+                    {activeMonthCycle === 2 &&
+                      "Fokus: Konsinyasi & Target Omzet Pasar"}
+                    {activeMonthCycle === 3 &&
+                      "Fokus: Penyaluran CSR & Pembagian Dividen"}
                   </div>
                 </div>
               </div>
@@ -1042,7 +1434,10 @@ export default function Home() {
       {/* ------------------------------------------------------------ */}
       {/* 8. SECTION 04: STRUKTUR ORGANISASI KORPORASI SISWA (5 DIVISI) */}
       {/* ------------------------------------------------------------ */}
-      <section id="organisasi" className="border-b-2 border-[#0F1115] bg-white py-14 sm:py-20 lg:py-24">
+      <section
+        id="organisasi"
+        className="border-b-2 border-[#0F1115] bg-white py-14 sm:py-20 lg:py-24"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center space-x-3 mb-4">
             <span className="w-6 h-3 bg-diagonal-stripes border border-[#0F1115] rounded-xs" />
@@ -1056,7 +1451,9 @@ export default function Home() {
               Struktur 5 Divisi Utama
             </h2>
             <p className="text-sm sm:text-base text-[#525866] leading-relaxed">
-              Setiap perusahaan siswa dipimpin oleh dewan direksi dan manajer divisi yang bekerja secara sinergis mengadopsi standar tata kelola korporasi profesional.
+              Setiap perusahaan siswa dipimpin oleh dewan direksi dan manajer
+              divisi yang bekerja secara sinergis mengadopsi standar tata kelola
+              korporasi profesional.
             </p>
           </div>
 
@@ -1074,7 +1471,10 @@ export default function Home() {
                       : "bg-white text-[#0F1115] border-[#0F1115] hover:bg-[#FFE500]/20 shadow-[2px_2px_0px_#0F1115]"
                   }`}
                 >
-                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: div.color }} />
+                  <span
+                    className="w-2 h-2 rounded-full"
+                    style={{ backgroundColor: div.color }}
+                  />
                   <span>{div.code}</span>
                   <span className="hidden sm:inline font-sans font-bold text-[10px]">
                     — {div.name.split(" ")[0]}
@@ -1092,7 +1492,10 @@ export default function Home() {
                 <div className="flex flex-wrap items-center gap-2">
                   <span
                     className="border-2 border-[#0F1115] px-3.5 py-1 rounded-full text-xs font-mono font-black uppercase"
-                    style={{ backgroundColor: currentDivision.color, color: "#0F1115" }}
+                    style={{
+                      backgroundColor: currentDivision.color,
+                      color: "#0F1115",
+                    }}
                   >
                     {currentDivision.code} // {currentDivision.name}
                   </span>
@@ -1148,7 +1551,8 @@ export default function Home() {
                     {currentDivision.deliverable}
                   </div>
                   <div className="p-3 bg-[#FFE500]/20 border border-[#0F1115] rounded-xl text-xs font-mono text-[#0F1115]">
-                    Seluruh berkas diarsipkan dan dipresentasikan di hadapan dewan juri & civitas sekolah pada puncak Likuidasi.
+                    Seluruh berkas diarsipkan dan dipresentasikan di hadapan
+                    dewan juri & civitas sekolah pada puncak Likuidasi.
                   </div>
                 </div>
               </div>
@@ -1160,7 +1564,10 @@ export default function Home() {
       {/* ------------------------------------------------------------ */}
       {/* 9. SECTION 05: 6 CAPAIAN KOMPETENSI (TUJUAN & MANFAAT PROGRAM) */}
       {/* ------------------------------------------------------------ */}
-      <section id="tujuan" className="border-b-2 border-[#0F1115] bg-[#FAF9F5] py-14 sm:py-20 lg:py-24">
+      <section
+        id="tujuan"
+        className="border-b-2 border-[#0F1115] bg-[#FAF9F5] py-14 sm:py-20 lg:py-24"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center space-x-3 mb-4">
             <span className="w-6 h-3 bg-diagonal-stripes border border-[#0F1115] rounded-xs" />
@@ -1174,7 +1581,9 @@ export default function Home() {
               Tujuan & Manfaat Program
             </h2>
             <p className="text-sm sm:text-base text-[#525866] leading-relaxed">
-              Student Company membekali siswa SMENDA dengan kesiapan mental, keterampilan abad ke-21, dan literasi bisnis untuk melangkah ke dunia profesional.
+              Student Company membekali siswa SMENDA dengan kesiapan mental,
+              keterampilan abad ke-21, dan literasi bisnis untuk melangkah ke
+              dunia profesional.
             </p>
           </div>
 
@@ -1212,7 +1621,10 @@ export default function Home() {
       {/* ------------------------------------------------------------ */}
       {/* 10. SECTION 06: FAQ & TANYA JAWAB PENDIDIKAN */}
       {/* ------------------------------------------------------------ */}
-      <section id="faq" className="border-b-2 border-[#0F1115] bg-white py-14 sm:py-20 lg:py-24">
+      <section
+        id="faq"
+        className="border-b-2 border-[#0F1115] bg-white py-14 sm:py-20 lg:py-24"
+      >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center space-x-3 mb-4">
             <span className="w-6 h-3 bg-diagonal-stripes border border-[#0F1115] rounded-xs" />
@@ -1226,7 +1638,8 @@ export default function Home() {
               Pertanyaan yang Sering Diajukan
             </h2>
             <p className="text-sm sm:text-base text-[#525866] leading-relaxed">
-              Ketahui informasi penting seputar operasional, modal, dan manfaat keikutsertaan siswa di Student Company SMENDA.
+              Ketahui informasi penting seputar operasional, modal, dan manfaat
+              keikutsertaan siswa di Student Company SMENDA.
             </p>
           </div>
 
@@ -1276,44 +1689,115 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------------ */}
-      {/* 11. HIGH-ENERGY ACTION CALLOUT BANNER */}
+      {/* 11. HIGH-ENERGY ACTION CALLOUT BANNER & REGISTRATION SECTION */}
       {/* ------------------------------------------------------------ */}
-      <section className="bg-[#FFE500] border-b-2 border-[#0F1115] py-14 sm:py-20 relative overflow-hidden">
+      <section
+        id="daftar"
+        className="bg-[#FFE500] border-b-2 border-[#0F1115] py-16 sm:py-24 relative overflow-hidden"
+      >
         {/* Diagonal Stripe Accent Edges */}
         <div className="absolute top-0 inset-x-0 h-3 bg-diagonal-stripes border-b border-[#0F1115]" />
         <div className="absolute bottom-0 inset-x-0 h-3 bg-diagonal-stripes border-t border-[#0F1115]" />
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative">
-          <div className="inline-flex items-center space-x-2 bg-white border-2 border-[#0F1115] rounded-full px-4 py-1.5 shadow-[3px_3px_0px_#0F1115]">
-            <Sparkles className="w-4 h-4 text-[#0F1115]" />
-            <span className="font-mono text-xs font-black uppercase text-[#0F1115]">
-              EKOSISTEM BISNIS SISWA SMENDA
-            </span>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 relative">
+          <div className="text-center space-y-4">
+            <div className="inline-flex items-center space-x-2 bg-white border-2 border-[#0F1115] rounded-full px-4 py-1.5 shadow-[3px_3px_0px_#0F1115]">
+              <Sparkles className="w-4 h-4 text-[#0F1115]" />
+              <span className="font-mono text-xs font-black uppercase text-[#0F1115]">
+                PENDAFTARAN RESMI // EKOSISTEM BISNIS SISWA SMENDA
+              </span>
+            </div>
+
+            <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl text-[#0F1115] uppercase tracking-tight leading-tight max-w-3xl mx-auto">
+              Siap Menjadi Bagian Dari Perusahaan Siswa?
+            </h2>
+
+            <p className="text-base sm:text-lg text-[#0F1115] max-w-2xl mx-auto font-sans font-medium">
+              Pendaftaran terbuka bagi seluruh siswa SMENDA. Silakan isi formulir
+              online resmi melalui tautan Google Forms di bawah ini dan konfirmasi
+              ke Contact Person untuk jadwal seleksi & wawancara.
+            </p>
+
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a
+                href={REGISTRATION_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-clay-black w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 text-xs sm:text-sm font-black uppercase tracking-wider inline-flex items-center justify-center space-x-2 shadow-[4px_4px_0px_#0F1115]"
+              >
+                <Sparkles className="w-4 h-4 shrink-0" />
+                <span>Isi Formulir Pendaftaran (Google Forms)</span>
+                <ExternalLink className="w-4 h-4 shrink-0" />
+              </a>
+
+              <button
+                onClick={() => scrollToSection("kegiatan")}
+                className="btn-clay-white w-full sm:w-auto px-6 sm:px-7 py-3.5 sm:py-4 text-xs sm:text-sm font-black uppercase tracking-wider inline-flex items-center justify-center space-x-2"
+              >
+                <span>Pelajari 14 Tahapan</span>
+                <ArrowRight className="w-4 h-4 shrink-0" />
+              </button>
+            </div>
           </div>
 
-          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl text-[#0F1115] uppercase tracking-tight leading-tight max-w-3xl mx-auto">
-            Siap Menjadi Generasi Wirausaha Unggul?
-          </h2>
+          {/* Contact Person Cards Grid */}
+          <div className="pt-4">
+            <div className="text-center mb-4">
+              <span className="font-mono text-xs font-black uppercase tracking-wider text-[#0F1115] bg-white border border-[#0F1115] px-3 py-1 rounded-full shadow-[2px_2px_0px_#0F1115]">
+                Hubungi Contact Person Resmi
+              </span>
+            </div>
 
-          <p className="text-base sm:text-lg text-[#0F1115] max-w-2xl mx-auto font-sans font-medium">
-            Jadilah bagian dari perusahaan nyata, ciptakan inovasi produk favorit warga sekolah, dan rasakan pengalaman mengelola bisnis sejak dini.
-          </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+              {CONTACT_PERSONS.map((cp) => (
+                <div
+                  key={cp.name}
+                  className="bg-white border-2 border-[#0F1115] rounded-2xl p-5 shadow-[5px_5px_0px_#0F1115] flex flex-col justify-between space-y-4 hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-center space-x-3 min-w-0">
+                      <div className="w-11 h-11 bg-[#FFE500] border-2 border-[#0F1115] rounded-xl flex items-center justify-center font-display font-black text-lg text-[#0F1115] shadow-[2px_2px_0px_#0F1115] shrink-0">
+                        {cp.name.charAt(0)}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center space-x-2">
+                          <h4 className="font-display font-black text-lg text-[#0F1115] truncate">
+                            {cp.name}
+                          </h4>
+                          <span className="w-2 h-2 rounded-full bg-[#10B981] shrink-0" />
+                        </div>
+                        <span className="font-mono text-xs font-bold text-[#525866] truncate block">
+                          {cp.role}
+                        </span>
+                      </div>
+                    </div>
 
-          <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <button
-              onClick={() => scrollToSection("kegiatan")}
-              className="btn-clay-black px-7 py-4 text-xs sm:text-sm font-black uppercase tracking-wider inline-flex items-center space-x-2"
-            >
-              <span>Eksplorasi 14 Tahapan</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+                    <span className="bg-[#FAF9F5] border border-[#0F1115] px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold shrink-0">
+                      WhatsApp
+                    </span>
+                  </div>
 
-            <button
-              onClick={() => scrollToSection("organisasi")}
-              className="btn-clay-white px-7 py-4 text-xs sm:text-sm font-black uppercase tracking-wider inline-flex items-center space-x-2"
-            >
-              <span>Lihat 5 Divisi Tim</span>
-            </button>
+                  <div className="bg-[#FAF9F5] border border-[#0F1115] rounded-xl p-3 flex flex-wrap items-center justify-between gap-1">
+                    <span className="font-mono text-xs sm:text-sm font-black text-[#0F1115]">
+                      {cp.phone}
+                    </span>
+                    <span className="text-[10px] font-mono font-bold text-[#525866]">
+                      Aktif
+                    </span>
+                  </div>
+
+                  <a
+                    href={cp.waUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-2.5 px-4 bg-[#25D366] hover:bg-[#20ba59] text-white border-2 border-[#0F1115] rounded-xl font-mono text-xs font-black uppercase text-center flex items-center justify-center space-x-2 shadow-[2px_2px_0px_#0F1115] transition-all"
+                  >
+                    <MessageSquare className="w-4 h-4 fill-white shrink-0" />
+                    <span>Chat WhatsApp {cp.name}</span>
+                  </a>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -1335,7 +1819,7 @@ export default function Home() {
             <div className="h-2.5 bg-diagonal-stripes border-b border-[#0F1115] shrink-0" />
 
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b-2 border-[#0F1115] px-5 sm:px-8 py-4 bg-white shrink-0">
+            <div className="flex items-center justify-between border-b-2 border-[#0F1115] px-4 sm:px-8 py-3.5 sm:py-4 bg-white shrink-0">
               <div className="flex items-center space-x-2 sm:space-x-3">
                 <span className="w-3 h-3 rounded-full bg-[#FFE500] border border-[#0F1115]" />
                 <span className="font-mono text-xs font-black uppercase tracking-wider text-[#0F1115]">
@@ -1344,7 +1828,7 @@ export default function Home() {
               </div>
               <button
                 onClick={() => setActiveStepModal(null)}
-                className="w-8 h-8 rounded-full bg-[#FAF9F5] border border-[#0F1115] hover:bg-[#FFE500] text-[#0F1115] transition-colors flex items-center justify-center"
+                className="w-8 h-8 rounded-full bg-[#FAF9F5] border border-[#0F1115] hover:bg-[#FFE500] text-[#0F1115] transition-colors flex items-center justify-center shrink-0"
                 aria-label="Tutup detail tahapan"
               >
                 <X className="w-4 h-4" />
@@ -1352,7 +1836,7 @@ export default function Home() {
             </div>
 
             {/* Modal Scrollable Body */}
-            <div className="p-6 sm:p-8 overflow-y-auto space-y-5 flex-1 bg-[#FAF9F5]/40">
+            <div className="p-4 sm:p-8 overflow-y-auto space-y-4 sm:space-y-5 flex-1 bg-[#FAF9F5]/40">
               {/* Number and Tag */}
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center space-x-3">
@@ -1392,17 +1876,80 @@ export default function Home() {
                 {activeStepModal.description}
               </div>
 
+              {/* Special Action Block for Step 1: Pendaftaran */}
+              {activeStepModal.id === 1 && (
+                <div className="bg-[#FFE500] border-2 border-[#0F1115] rounded-2xl p-5 shadow-[4px_4px_0px_#0F1115] space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Sparkles className="w-4 h-4 text-[#0F1115]" />
+                      <span className="font-mono text-xs font-black uppercase text-[#0F1115]">
+                        Tautan Pendaftaran & Narahubung Resmi
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-mono font-black uppercase bg-white border border-[#0F1115] px-2 py-0.5 rounded-full">
+                      T.A 2026/2027
+                    </span>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-[#0F1115] font-sans font-medium leading-relaxed">
+                    Pendaftaran dibuka saat kegiatan MPLS. Silakan lengkapi formulir online Google Forms di bawah ini dan lakukan konfirmasi langsung ke pengurus (Contact Person):
+                  </p>
+
+                  <a
+                    href={REGISTRATION_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-clay-black w-full py-3 text-xs sm:text-sm font-black uppercase tracking-wider inline-flex items-center justify-center space-x-2 shadow-[3px_3px_0px_#0F1115]"
+                  >
+                    <span>Buka Formulir Pendaftaran (Google Forms)</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+
+                  <div className="pt-2 border-t border-[#0F1115]/30">
+                    <span className="font-mono text-[11px] font-black uppercase text-[#0F1115] block mb-2">
+                      Hubungi Contact Person (WhatsApp):
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {CONTACT_PERSONS.map((cp) => (
+                        <a
+                          key={cp.name}
+                          href={cp.waUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-3 bg-white border-2 border-[#0F1115] rounded-xl shadow-[2px_2px_0px_#0F1115] hover:bg-[#FAF9F5] hover:translate-x-0.5 transition-all flex items-center justify-between gap-2 group"
+                        >
+                          <div className="min-w-0">
+                            <div className="font-display font-black text-sm text-[#0F1115] truncate">
+                              {cp.name}
+                            </div>
+                            <div className="font-mono text-xs text-[#525866] font-bold truncate">
+                              {cp.phone}
+                            </div>
+                          </div>
+                          <span className="text-[10px] font-mono font-black uppercase px-2 py-1 bg-[#25D366]/20 border border-[#25D366] text-[#0F1115] rounded group-hover:bg-[#25D366] group-hover:text-white transition-colors shrink-0">
+                            WhatsApp
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Guidance Checklist */}
               <div className="p-4 bg-[#FFE500]/20 border border-[#0F1115] rounded-2xl text-xs font-mono text-[#0F1115] space-y-1">
-                <div className="font-black uppercase">Tips Pelaksanaan Langkah:</div>
+                <div className="font-black uppercase">
+                  Tips Pelaksanaan Langkah:
+                </div>
                 <p>
-                  Koordinasikan dengan guru pembimbing dan pastikan seluruh dokumen pendukung dicatat dalam buku administrasi perusahaan.
+                  Koordinasikan dengan guru pembimbing dan pastikan seluruh
+                  dokumen pendukung dicatat dalam buku administrasi perusahaan.
                 </p>
               </div>
             </div>
 
             {/* Modal Navigation Footer */}
-            <div className="px-5 sm:px-8 py-4 border-t-2 border-[#0F1115] bg-white flex items-center justify-between gap-3 shrink-0">
+            <div className="px-4 sm:px-8 py-3.5 sm:py-4 border-t-2 border-[#0F1115] bg-white flex items-center justify-between gap-3 shrink-0">
               <button
                 onClick={handlePrevStep}
                 disabled={activeStepModal.id === 1}
@@ -1449,14 +1996,14 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 border-b-2 border-[#0F1115] pb-10">
             {/* Institution Brand */}
-            <div className="lg:col-span-6 space-y-4">
+            <div className="lg:col-span-5 space-y-4">
               <div className="flex items-center space-x-3">
-                <div className="w-11 h-11 bg-[#FFE500] border-2 border-[#0F1115] rounded-full p-1.5 flex items-center justify-center shadow-[3px_3px_0px_#0F1115] overflow-hidden shrink-0">
+                <div className="w-14 h-14 bg-[#FFE500] border-2 border-[#0F1115] rounded-full p-1 flex items-center justify-center shadow-[3px_3px_0px_#0F1115] overflow-hidden shrink-0">
                   <Image
                     src="/logo.png"
                     alt="Logo SCSMENDA"
-                    width={36}
-                    height={36}
+                    width={56}
+                    height={56}
                     className="w-full h-full object-contain rounded-full"
                   />
                 </div>
@@ -1471,7 +2018,10 @@ export default function Home() {
               </div>
 
               <p className="text-xs sm:text-sm text-[#525866] max-w-md leading-relaxed">
-                Laboratorium kewirausahaan terapan SMENDA: beranggotakan siswa, dijalankan siswa, dan dikembangkan secara mandiri oleh siswa untuk melatih kepemimpinan, integritas bisnis, dan kreativitas masa depan.
+                Laboratorium kewirausahaan terapan SMENDA: beranggotakan siswa,
+                dijalankan siswa, dan dikembangkan secara mandiri oleh siswa
+                untuk melatih kepemimpinan, integritas bisnis, dan kreativitas
+                masa depan.
               </p>
 
               <div className="flex flex-wrap gap-2 pt-1">
@@ -1485,6 +2035,30 @@ export default function Home() {
                   Infographic Layout
                 </span>
               </div>
+
+              {/* Supported by 7arzz */}
+              <div className="pt-2">
+                <span className="font-mono text-[10px] font-black uppercase tracking-wider text-[#525866] block mb-1.5">
+                  Supported By:
+                </span>
+                <div className="inline-flex items-center space-x-3 bg-white border-2 border-[#0F1115] rounded-2xl p-2.5 sm:p-3 shadow-[3px_3px_0px_#FFE500] hover:translate-x-0.5 hover:translate-y-0.5 transition-all">
+                  <Image
+                    src="/7arzz.jpg"
+                    alt="Supported by 7arzz Store - Digital Solution for Your Business"
+                    width={220}
+                    height={55}
+                    className="h-9 sm:h-11 w-auto object-contain rounded-lg"
+                  />
+                  <div className="border-l-2 border-[#0F1115]/20 pl-3">
+                    <span className="font-display font-black text-xs sm:text-sm text-[#0F1115] block leading-tight">
+                      7arzz Store
+                    </span>
+                    <span className="font-mono text-[9px] text-[#525866] font-bold block uppercase">
+                      Official Partner
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Document Navigation */}
@@ -1494,57 +2068,131 @@ export default function Home() {
               </div>
               <ul className="space-y-2 text-[#525866] font-bold">
                 <li>
-                  <button onClick={() => scrollToSection("overview")} className="hover:text-[#0F1115] text-left">
+                  <button
+                    onClick={() => scrollToSection("overview")}
+                    className="hover:text-[#0F1115] text-left"
+                  >
                     01. Definisi & 3 Pilar
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => scrollToSection("kegiatan")} className="hover:text-[#0F1115] text-left">
+                  <button
+                    onClick={() => scrollToSection("kegiatan")}
+                    className="hover:text-[#0F1115] text-left"
+                  >
                     02. 14 Tahapan Lengkap
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => scrollToSection("siklus")} className="hover:text-[#0F1115] text-left">
+                  <button
+                    onClick={() => scrollToSection("siklus")}
+                    className="hover:text-[#0F1115] text-left"
+                  >
                     03. Siklus 3 Bulan
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => scrollToSection("organisasi")} className="hover:text-[#0F1115] text-left">
+                  <button
+                    onClick={() => scrollToSection("organisasi")}
+                    className="hover:text-[#0F1115] text-left"
+                  >
                     04. Struktur 5 Divisi
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => scrollToSection("tujuan")} className="hover:text-[#0F1115] text-left">
+                  <button
+                    onClick={() => scrollToSection("tujuan")}
+                    className="hover:text-[#0F1115] text-left"
+                  >
                     05. Capaian Kompetensi
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => scrollToSection("faq")} className="hover:text-[#0F1115] text-left">
+                  <button
+                    onClick={() => scrollToSection("faq")}
+                    className="hover:text-[#0F1115] text-left"
+                  >
                     06. Tanya Jawab (FAQ)
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("daftar")}
+                    className="hover:text-[#0F1115] text-left font-black text-[#0F1115]"
+                  >
+                    07. Pendaftaran & CP
+                  </button>
+                </li>
+                <li className="pt-1">
+                  <button
+                    onClick={() => scrollToSection("video-profil")}
+                    className="text-[#0F1115] font-black hover:underline text-left inline-flex items-center space-x-1"
+                  >
+                    <Play className="w-3 h-3 fill-current text-[#0F1115]" />
+                    <span>08. Video Profil Siswa</span>
                   </button>
                 </li>
               </ul>
             </div>
 
-            {/* Palette & Spec Meta */}
-            <div className="lg:col-span-3 space-y-3 font-mono text-xs">
-              <div className="font-black uppercase tracking-wider text-[#0F1115] border-b-2 border-[#0F1115] pb-2">
-                Spesifikasi Desain
+            {/* Pendaftaran & Contact Persons */}
+            <div className="lg:col-span-4 space-y-3 font-mono text-xs">
+              <div className="font-black uppercase tracking-wider text-[#0F1115] border-b-2 border-[#0F1115] pb-2 flex items-center justify-between">
+                <span>Pendaftaran & Narahubung</span>
+                <span className="w-2 h-2 rounded-full bg-[#10B981]" />
               </div>
-              <div className="text-[#525866] space-y-1.5 text-xs font-bold">
-                <p>Tipografi: Space Grotesk & Inter</p>
-                <p>Aksen Utama: Vibrant Yellow (#FFE500)</p>
-                <p>Kedalaman: 3D Clay Soft Specular</p>
-                <p>Pola: Diagonal Yellow Stripes</p>
-                <p>Kontras: Crisp Pitch Black (#0F1115)</p>
+
+              <p className="text-[#525866] font-bold text-xs leading-relaxed">
+                Pendaftaran dibuka via Google Forms resmi. Silakan hubungi pengurus untuk konfirmasi:
+              </p>
+
+              <a
+                href={REGISTRATION_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 px-3 bg-[#FFE500] hover:bg-[#FFD028] text-[#0F1115] border-2 border-[#0F1115] rounded-xl font-black uppercase tracking-wider inline-flex items-center justify-center space-x-1.5 shadow-[2px_2px_0px_#0F1115] transition-all"
+              >
+                <span>Buka Form Pendaftaran</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+
+              <div className="space-y-2 pt-1">
+                {CONTACT_PERSONS.map((cp) => (
+                  <a
+                    key={cp.name}
+                    href={cp.waUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-2.5 bg-[#FAF9F5] border border-[#0F1115] rounded-xl hover:bg-[#FFE500] transition-colors"
+                  >
+                    <div>
+                      <span className="font-black text-[#0F1115] block">
+                        {cp.name} (Contact Person)
+                      </span>
+                      <span className="text-[11px] text-[#525866] font-bold">
+                        {cp.phone}
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-black uppercase px-2 py-0.5 bg-white border border-[#0F1115] rounded">
+                      WhatsApp
+                    </span>
+                  </a>
+                ))}
               </div>
             </div>
           </div>
 
           {/* Colophon & Back to top */}
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs font-mono font-bold text-[#525866] gap-3 text-center sm:text-left">
-            <div>
-              © 2026 SCSMENDA — PROGRAM KEWIRAUSAHAAN SISWA RESMI.
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+              <span>© 2026 SCSMENDA — PROGRAM KEWIRAUSAHAAN SISWA RESMI.</span>
+              <span className="hidden sm:inline text-[#0F1115]/40">•</span>
+              <span className="text-[#0F1115] font-black inline-flex items-center space-x-1.5">
+                <span>SUPPORTED BY</span>
+                <span className="bg-[#FFE500] text-[#0F1115] px-2 py-0.5 rounded border border-[#0F1115]">
+                  7ARZZ
+                </span>
+              </span>
             </div>
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
