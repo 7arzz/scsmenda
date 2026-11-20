@@ -239,7 +239,7 @@ export default function VideoPromosiClient() {
   }, [togglePlay, skipSeconds, toggleMute]);
 
   return (
-    <div className="min-h-screen bg-[#FAF9F5] text-[#0F1115] flex flex-col font-sans selection:bg-[#FFE500] selection:text-[#0F1115] relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#FAF9F5] text-[#0F1115] flex flex-col font-sans selection:bg-[#FFE500] selection:text-[#0F1115] relative overflow-x-clip">
       {/* ------------------------------------------------------------ */}
       {/* 1. TOP DIAGONAL BANNER */}
       {/* ------------------------------------------------------------ */}
@@ -269,7 +269,7 @@ export default function VideoPromosiClient() {
       {/* ------------------------------------------------------------ */}
       {/* 2. STICKY HEADER WITH BACK TO HOME */}
       {/* ------------------------------------------------------------ */}
-      <header className="sticky top-0 z-40 bg-[#FAF9F5]/90 backdrop-blur-md border-b-2 border-[#0F1115]">
+      <header className="sticky top-0 z-50 bg-[#FAF9F5]/95 backdrop-blur-md border-b-2 border-[#0F1115] shadow-xs transition-shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-18 sm:h-20">
             {/* Left: Brand with Official Logo */}

@@ -45,7 +45,7 @@ export default function RootLayout({
       lang="id"
       className={`${inter.variable} ${spaceGrotesk.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#FAF9F5] text-[#0F1115] font-sans selection:bg-[#FFE500] selection:text-[#0F1115] overflow-x-hidden">
+      <body className="min-h-full flex flex-col bg-[#FAF9F5] text-[#0F1115] font-sans selection:bg-[#FFE500] selection:text-[#0F1115] overflow-x-clip">
         {children}
       </body>
     </html>

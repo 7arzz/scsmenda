@@ -187,7 +187,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF9F5] text-[#0F1115] flex flex-col font-sans selection:bg-[#FFE500] selection:text-[#0F1115] relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#FAF9F5] text-[#0F1115] flex flex-col font-sans selection:bg-[#FFE500] selection:text-[#0F1115] relative overflow-x-clip">
       {/* ------------------------------------------------------------ */}
       {/* 1. DISTINCTIVE DIAGONAL YELLOW STRIPES TOP BANNER */}
       {/* ------------------------------------------------------------ */}
@@ -217,9 +217,9 @@ export default function Home() {
       </div>
 
       {/* ------------------------------------------------------------ */}
-      {/* 2. MODERN CORPORATE MEMPHIS HEADER */}
+      {/* 2. MODERN CORPORATE MEMPHIS HEADER (STICKY TOP) */}
       {/* ------------------------------------------------------------ */}
-      <header className="sticky top-0 z-40 bg-[#FAF9F5]/90 backdrop-blur-md border-b-2 border-[#0F1115]">
+      <header className="sticky top-0 z-50 bg-[#FAF9F5]/95 backdrop-blur-md border-b-2 border-[#0F1115] shadow-xs transition-shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-18 sm:h-20 gap-4 lg:gap-6">
             {/* Left: Brand with Official Logo & Circular Emblem */}
